@@ -1,19 +1,13 @@
 fileFormatVersion: 2
-guid: 7dbc509ccb2168149a381845c17a15d8
+guid: bf8f1595d2ab3d14d8ac12b9cbf18f2f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5171193591305426524
-    second: "Animaci\xF3n Caminar_2-Sheet_0"
+      213: 2465907817954276683
+    second: "Animaci\xF3n IDLE_0"
   - first:
-      213: 6746230709702034113
-    second: "Animaci\xF3n Caminar_2-Sheet_1"
-  - first:
-      213: 1469794266290157148
-    second: "Animaci\xF3n Caminar_2-Sheet_2"
-  - first:
-      213: 2095495459175376118
-    second: "Animaci\xF3n Caminar_2-Sheet_3"
+      213: -3682841286454917434
+    second: "Animaci\xF3n IDLE_1"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,7 +103,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "Animaci\xF3n Caminar_2-Sheet_0"
+      name: "Animaci\xF3n IDLE_0"
       rect:
         serializedVersion: 2
         x: 0
@@ -124,14 +118,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c5659825c25c3c740800000000000000
-      internalID: 5171193591305426524
+      spriteID: b45f502781aa83220800000000000000
+      internalID: 2465907817954276683
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "Animaci\xF3n Caminar_2-Sheet_1"
+      name: "Animaci\xF3n IDLE_1"
       rect:
         serializedVersion: 2
         x: 32
@@ -146,52 +140,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1c20f90661d6f9d50800000000000000
-      internalID: 6746230709702034113
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "Animaci\xF3n Caminar_2-Sheet_2"
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c56712f0912c56410800000000000000
-      internalID: 1469794266290157148
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "Animaci\xF3n Caminar_2-Sheet_3"
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6f4a7988402b41d10800000000000000
-      internalID: 2095495459175376118
+      spriteID: 6c646bccc5be3ecc0800000000000000
+      internalID: -3682841286454917434
       vertices: []
       indices: 
       edges: []
@@ -200,7 +150,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 263774a2ff1e90541a8b0f51c70f76aa
+    spriteID: e100871dd685cb447b3c9c92607c6946
     internalID: 0
     vertices: []
     indices: 
@@ -210,12 +160,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":4.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":2.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      "Animaci\xF3n Caminar_2-Sheet_0": 5171193591305426524
-      "Animaci\xF3n Caminar_2-Sheet_1": 6746230709702034113
-      "Animaci\xF3n Caminar_2-Sheet_2": 1469794266290157148
-      "Animaci\xF3n Caminar_2-Sheet_3": 2095495459175376118
+      "Animaci\xF3n IDLE_0": 2465907817954276683
+      "Animaci\xF3n IDLE_1": -3682841286454917434
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
