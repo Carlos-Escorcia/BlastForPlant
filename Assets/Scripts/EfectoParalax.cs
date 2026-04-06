@@ -37,12 +37,10 @@ public class EfectoParalax : MonoBehaviour
         transform.position = new Vector3(posicionInicialX + distancia, transform.position.y, transform.position.z);//movim iento del fondo
 
 
-        // La magia infinita: Si avanzamos más allá del sprite, reposicionamos el inicio
+        //Si se mueve más allá del sprite, vuelve a empezar
 
         if (temp > posicionInicialX + longitudSprite)
-
-        {
-
+        { 
             posicionInicialX += longitudSprite;
 
         }
@@ -50,9 +48,7 @@ public class EfectoParalax : MonoBehaviour
         else if (temp < posicionInicialX - longitudSprite)
 
         {
-
             posicionInicialX -= longitudSprite;
-
         }
 
     }
