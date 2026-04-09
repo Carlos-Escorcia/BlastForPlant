@@ -39,11 +39,9 @@ public class EfectoParalax : MonoBehaviour
 
     void LateUpdate()
     {
-        // Medida de seguridad por si no has asignado la cámara
         if (camaraTransform == null) return;
 
         // --- LÓGICA HORIZONTAL ---
-        float temp = (camaraTransform.position.x * (1 - efectoParallax));
         float distancia = (camaraTransform.position.x * efectoParallax);
 
         // --- LÓGICA VERTICAL ---
@@ -51,22 +49,12 @@ public class EfectoParalax : MonoBehaviour
 
         if (seguirEnVertical)
         {
-            // Si sigue a la cámara, igualamos su Y a la de la cámara y le sumamos el ajuste
             nuevaPosicionY = camaraTransform.position.y + offsetVertical;
         }
 
-        // Aplicamos la posición mezclando la distancia X y nuestra nueva Y
+        // Aplicamos la posición
         transform.position = new Vector3(posicionInicialX + distancia, nuevaPosicionY, transform.position.z);
 
-        // --- BUCLE INFINITO HORIZONTAL ---
-        // Al usar 'longitudSprite' (que ahora es un poquito más pequeño), el bucle se activa antes
-        if (temp > posicionInicialX + longitudSprite)
-        {
-            posicionInicialX += longitudSprite;
-        }
-        else if (temp < posicionInicialX - longitudSprite)
-        {
-            posicionInicialX -= longitudSprite;
-        }
+        // ¡HE BORRADO EL BUCLE INFINITO PORQUE CON "TILED" NO HACE FALTA!
     }
 }
