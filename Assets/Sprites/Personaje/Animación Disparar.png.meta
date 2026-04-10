@@ -1,25 +1,16 @@
 fileFormatVersion: 2
-guid: 61e45c759f4e1aa49ac63adb459fcf40
+guid: 84780c96a8bd33843a0f2a59ac4d9745
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3531573671219995880
-    second: Enemigo 1 (v2)_0
+      213: -4507644565555249504
+    second: "Animaci\xF3n Disparar_0"
   - first:
-      213: 2621287313391955997
-    second: Enemigo 1 (v2)_1
+      213: 201404677334510756
+    second: "Animaci\xF3n Disparar_1"
   - first:
-      213: 7125430783484953059
-    second: Enemigo 1 (v2)_2
-  - first:
-      213: 1912152924945037631
-    second: Enemigo 1 (v2)_3
-  - first:
-      213: 1325344301868120693
-    second: Enemigo 1 (v2)_4
-  - first:
-      213: -6621367911518569505
-    second: Enemigo 1 (v2)_5
+      213: -2986681901638472158
+    second: "Animaci\xF3n Disparar_2"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -66,7 +57,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 36
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -115,133 +106,67 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Enemigo_Ataque_0
+      name: "Animaci\xF3n Disparar_0"
       rect:
         serializedVersion: 2
-        x: 1
+        x: 0
         y: 0
-        width: 26
+        width: 32
         height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 6236efff85adb5b4ba9c9b595607c40e
-      internalID: 774514548
+      spriteID: 0aefb507621a171c0800000000000000
+      internalID: -4507644565555249504
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemigo_Ataque_1
+      name: "Animaci\xF3n Disparar_1"
       rect:
         serializedVersion: 2
-        x: 39
-        y: 1
-        width: 26
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cfdc2798dc57492419252293149a7d08
-      internalID: -1795223251
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Enemigo_Ataque_2
-      rect:
-        serializedVersion: 2
-        x: 76
-        y: 3
-        width: 26
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 945a9cd9a7eb68a4e865623dfacd5c65
-      internalID: -29529978
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Enemigo_Ataque_3
-      rect:
-        serializedVersion: 2
-        x: 114
-        y: 4
-        width: 26
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6c415d1884d19e2409be222e4030d8b6
-      internalID: 834063490
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Enemigo_Ataque_4
-      rect:
-        serializedVersion: 2
-        x: 152
-        y: 2
-        width: 26
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b7deb4de8aa11c0469fe2cbe255695d8
-      internalID: 1725993163
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Enemigo_Ataque_5
-      rect:
-        serializedVersion: 2
-        x: 190
+        x: 32
         y: 0
-        width: 26
+        width: 32
         height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: b6887fd689b39244abcb26f81507591a
-      internalID: -2078573140
+      spriteID: 4ac20a8ac788bc200800000000000000
+      internalID: 201404677334510756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Animaci\xF3n Disparar_2"
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22e20c372ac2d86d0800000000000000
+      internalID: -2986681901638472158
       vertices: []
       indices: 
       edges: []
@@ -250,7 +175,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 99bdf9a4b780c564fb6f9a3c9d73fecd
+    spriteID: 12caff4159fbdb644bacc1c171313f5b
     internalID: 0
     vertices: []
     indices: 
@@ -260,14 +185,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Enemigo_Ataque_0: 774514548
-      Enemigo_Ataque_1: -1795223251
-      Enemigo_Ataque_2: -29529978
-      Enemigo_Ataque_3: 834063490
-      Enemigo_Ataque_4: 1725993163
-      Enemigo_Ataque_5: -2078573140
+      "Animaci\xF3n Disparar_0": -4507644565555249504
+      "Animaci\xF3n Disparar_1": 201404677334510756
+      "Animaci\xF3n Disparar_2": -2986681901638472158
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
