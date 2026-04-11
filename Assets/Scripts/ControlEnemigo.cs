@@ -1,12 +1,11 @@
 using UnityEngine;
 
-// Obligamos a Unity a que este objeto tenga siempre estos componentes
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public class ControlEnemigo : MonoBehaviour
 {
     [Header("Configuración de IA")]
     public float radioDeVision = 6f;
-    public float radioDeAtaque = 1.5f;
+    // Eliminamos el 'radioDeAtaque' porque ahora ataca en cuanto te ve
     public float velocidad = 2f;
 
     [Header("Referencias")]
@@ -20,7 +19,7 @@ public class ControlEnemigo : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
 
-        // Si se te olvida poner al jugador en el Inspector, el script lo busca por ti
+        // Autocargar al jugador si se nos olvida en el Inspector
         if (jugador == null)
         {
             GameObject objJugador = GameObject.Find("Personaje");
@@ -34,52 +33,49 @@ public class ControlEnemigo : MonoBehaviour
 
         float distancia = Vector2.Distance(transform.position, jugador.position);
 
-        // --- Lógica de Movimiento e IA ---
-        if (distancia <= radioDeAtaque)
-        {
-            // FASE 1: ATACAR
-            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y); // Frena
-            animator.SetBool("Moviendose", false);
-            animator.SetBool("Atacando", true);
-            MirarAlJugador();
-        }
-        else if (distancia <= radioDeVision)
-        {
-            // FASE 2: PERSEGUIR
-            animator.SetBool("Atacando", false);
-            animator.SetBool("Moviendose", true);
+        // --- LÓGICA SIMPLIFICADA: 2 ESTADOS ---
 
-            // Si el jugador está a la derecha, direccionX será 1. Si está a la izquierda, será -1.
+        // Si el jugador entra en el campo de visión...
+        if (distancia <= radioDeVision)
+        {
+            // 1. Cambiamos la animación a ATAQUE
+            animator.SetBool("Atacando", true);
+
+            // 2. Nos movemos hacia el jugador
             float direccionX = (jugador.position.x - transform.position.x) > 0 ? 1 : -1;
             rb.linearVelocity = new Vector2(direccionX * velocidad, rb.linearVelocity.y);
+
+            // 3. Volteamos el sprite si es necesario
             MirarAlJugador();
         }
-        else
+        else // Si el jugador está lejos...
         {
-            // FASE 3: IDLE (Quieto)
-            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+            // 1. Volvemos a la animación IDLE
             animator.SetBool("Atacando", false);
-            animator.SetBool("Moviendose", false);
+
+            // 2. Frenamos al enemigo para que no siga resbalando
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
         }
     }
 
     private void MirarAlJugador()
     {
-        // ¡AQUÍ ESTABA EL ERROR! 
-        // Si el jugador está a la izquierda (x es menor), la escala X debe ser NEGATIVA para voltearlo.
+        // Lógica matemática para voltear el sprite según la posición del jugador
         if (jugador.position.x < transform.position.x)
         {
+            // Mira a la izquierda
             transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
         else
         {
-            // Si el jugador está a la derecha, la escala X debe ser POSITIVA (su estado normal).
+            // Mira a la derecha
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        // Si tocamos físicamente al jugador, le hacemos daño y destruimos este enemigo
         if (collision.gameObject.CompareTag("Player"))
         {
             ControlPersonaje personaje = collision.gameObject.GetComponent<ControlPersonaje>();
@@ -91,9 +87,8 @@ public class ControlEnemigo : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
+        // Solo dibujamos la esfera de visión para mantener el editor limpio
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, radioDeVision);
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, radioDeAtaque);
     }
 }
