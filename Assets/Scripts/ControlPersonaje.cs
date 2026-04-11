@@ -151,6 +151,9 @@ public class ControlPersonaje : MonoBehaviour
             Instantiate(prefabBala, puntoDeDisparo.position, transform.rotation);
         }
     }
+
+    // =========================================================
+
     private void ActualizarUI()
     {
         if (textoVidas != null) textoVidas.text = "Vidas: " + vidas;
