@@ -678,7 +678,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.00979878, y: 0.45563674}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -688,7 +688,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.6080544, y: 0.7550335}
   m_EdgeRadius: 0
 --- !u!114 &518914521
 MonoBehaviour:
@@ -703,7 +703,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControlEnemigo
   radioDeVision: 6
-  radioDeAtaque: 1.5
   velocidad: 2
   jugador: {fileID: 1328077557}
 --- !u!95 &518914522
