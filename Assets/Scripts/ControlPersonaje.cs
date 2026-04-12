@@ -27,9 +27,9 @@ public class ControlPersonaje : MonoBehaviour
     [Header("Sistema de Disparo")]
     public GameObject prefabBala;
     public Transform puntoDeDisparo;
-    public float tiempoRecarga = 0.5f;
+    public float tiempoRecarga = 0.5f; // Tiempo de espera obligado entre disparos
 
-    private float tiempoUltimoDisparo = -10f;
+    private float tiempoUltimoDisparo = -10f; // Control interno del tiempo
 
     // Variables internas
     private Rigidbody2D rb;
@@ -51,6 +51,7 @@ public class ControlPersonaje : MonoBehaviour
 
     void Update()
     {
+        // --- 1. LEER INPUTS ---
         movimientoHorizontal = Input.GetAxisRaw("Horizontal");
         animator.SetFloat("Velocidad", Mathf.Abs(movimientoHorizontal));
 
@@ -62,6 +63,7 @@ public class ControlPersonaje : MonoBehaviour
 
         if (enSuelo) puedeDobleSalto = true;
 
+        // --- 2. SALTO ---
         if (Input.GetButtonDown("Jump"))
         {
             if (enSuelo) EjecutarSalto();
@@ -72,12 +74,13 @@ public class ControlPersonaje : MonoBehaviour
             }
         }
 
-        // --- DISPARO ---
+        // --- 3. DISPARO INSTANTÁNEO AL PULSAR ENTER ---
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            IntentarDisparar();
+            Disparar();
         }
 
+        // --- 4. GRAVEDAD MEJORADA ---
         if (rb.linearVelocity.y < 0)
         {
             rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (multiplicadorCaida - 1) * Time.deltaTime;
@@ -127,28 +130,25 @@ public class ControlPersonaje : MonoBehaviour
     }
 
     // =========================================================
-    // --- SISTEMA DE DISPARO POR EVENTOS DE ANIMACIÓN ---
+    // --- SISTEMA DE DISPARO INSTANTÁNEO CON RECARGA ---
     // =========================================================
 
-    private void IntentarDisparar()
+    private void Disparar()
     {
-        // Solo comprobamos si ha pasado el tiempo de recarga
+        // Solo entra si el tiempo actual es mayor que la última vez que disparamos + la recarga
         if (Time.time >= tiempoUltimoDisparo + tiempoRecarga)
         {
-            // ÚNICAMENTE disparamos la animación. ¡No hay bala aquí!
+            // 1. Ejecutamos la animación al instante
             animator.SetTrigger("Disparar");
-            tiempoUltimoDisparo = Time.time;
-        }
-    }
 
-    // ¡ATENCIÓN! Esta función tiene que ser "public". 
-    // Unity la va a ejecutar automáticamente cuando la animación llegue a su fin.
-    public void CrearBalaDesdeAnimacion()
-    {
-        if (prefabBala != null && puntoDeDisparo != null)
-        {
-            // Aquí es donde realmente se crea la bala
-            Instantiate(prefabBala, puntoDeDisparo.position, transform.rotation);
+            // 2. Clonamos la bala al instante
+            if (prefabBala != null && puntoDeDisparo != null)
+            {
+                Instantiate(prefabBala, puntoDeDisparo.position, transform.rotation);
+            }
+
+            // 3. Registramos la hora de este disparo para bloquear los siguientes hasta que pase el tiempo
+            tiempoUltimoDisparo = Time.time;
         }
     }
 
