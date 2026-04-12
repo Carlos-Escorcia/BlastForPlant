@@ -5,21 +5,31 @@ public class ControlEnemigo : MonoBehaviour
 {
     [Header("Configuración de IA")]
     public float radioDeVision = 6f;
-    // Eliminamos el 'radioDeAtaque' porque ahora ataca en cuanto te ve
-    public float velocidad = 2f;
+
+    // Cambiamos 'velocidad' por fuerzas de salto
+    [Tooltip("Fuerza horizontal (X) y vertical (Y) del salto")]
+    public Vector2 fuerzaSalto = new Vector2(3f, 5f);
+    public float tiempoEntreSaltos = 1.2f; // Segundos que espera en el suelo antes de volver a saltar
+
+    [Header("Detección de Suelo")]
+    public Transform puntoSuelo; // Un GameObject vacío a los pies del enemigo
+    public float radioSuelo = 0.2f;
+    public LayerMask capaSuelo; // Para diferenciar qué es suelo y qué no
 
     [Header("Referencias")]
     public Transform jugador;
 
     private Animator animator;
     private Rigidbody2D rb;
+    private float temporizadorSalto;
+    private bool tocandoSuelo;
 
     void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
 
-        // Autocargar al jugador si se nos olvida en el Inspector
+        // Autocargar al jugador si se nos olvida
         if (jugador == null)
         {
             GameObject objJugador = GameObject.Find("Personaje");
@@ -31,64 +41,95 @@ public class ControlEnemigo : MonoBehaviour
     {
         if (jugador == null) return;
 
+        // 1. Verificamos si estamos tocando el suelo usando un pequeño círculo invisible
+        tocandoSuelo = Physics2D.OverlapCircle(puntoSuelo.position, radioSuelo, capaSuelo);
+
         float distancia = Vector2.Distance(transform.position, jugador.position);
 
-        // --- LÓGICA SIMPLIFICADA: 2 ESTADOS ---
+        // --- LÓGICA DE 2 ESTADOS ---
 
-        // Si el jugador entra en el campo de visión...
+        // ESTADO 2: ATAQUE / PERSECUCIÓN
         if (distancia <= radioDeVision)
         {
-            // 1. Cambiamos la animación a ATAQUE
             animator.SetBool("Atacando", true);
-
-            // 2. Nos movemos hacia el jugador
-            float direccionX = (jugador.position.x - transform.position.x) > 0 ? 1 : -1;
-            rb.linearVelocity = new Vector2(direccionX * velocidad, rb.linearVelocity.y);
-
-            // 3. Volteamos el sprite si es necesario
             MirarAlJugador();
+
+            // Lógica del temporizador para los saltos
+            if (temporizadorSalto > 0)
+            {
+                temporizadorSalto -= Time.deltaTime; // Restamos tiempo
+            }
+
+            // Si está en el suelo y el temporizador llegó a 0, ¡Salta!
+            if (tocandoSuelo && temporizadorSalto <= 0f)
+            {
+                DarSaltito();
+                temporizadorSalto = tiempoEntreSaltos; // Reiniciamos el temporizador
+            }
         }
-        else // Si el jugador está lejos...
+        // ESTADO 1: IDLE / REPOSO
+        else
         {
-            // 1. Volvemos a la animación IDLE
             animator.SetBool("Atacando", false);
 
-            // 2. Frenamos al enemigo para que no siga resbalando
-            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+            // Frenamos suavemente si está en el suelo para que no resbale
+            if (tocandoSuelo)
+            {
+                rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+            }
         }
+    }
+
+    private void DarSaltito()
+    {
+        // Reseteamos la velocidad actual para que las fuerzas no se acumulen y salte de más
+        rb.linearVelocity = Vector2.zero;
+
+        // Calculamos la dirección (1 = derecha, -1 = izquierda)
+        float direccionX = (jugador.position.x - transform.position.x) > 0 ? 1 : -1;
+
+        // Creamos el vector de fuerza diagonal
+        Vector2 impulso = new Vector2(fuerzaSalto.x * direccionX, fuerzaSalto.y);
+
+        // Aplicamos la fuerza de golpe (Impulse)
+        rb.AddForce(impulso, ForceMode2D.Impulse);
     }
 
     private void MirarAlJugador()
     {
-        // Lógica matemática para voltear el sprite según la posición del jugador
         if (jugador.position.x < transform.position.x)
         {
-            // Mira a la izquierda
             transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
         else
         {
-            // Mira a la derecha
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Si tocamos físicamente al jugador, le hacemos daño y destruimos este enemigo
         if (collision.gameObject.CompareTag("Player"))
         {
-            ControlPersonaje personaje = collision.gameObject.GetComponent<ControlPersonaje>();
-            if (personaje != null) personaje.RecibirDano();
-
+            // Nota de diseño: Idealmente usa TryGetComponent, es más moderno y seguro
+            if (collision.gameObject.TryGetComponent(out ControlPersonaje personaje))
+            {
+                personaje.RecibirDano();
+            }
             Destroy(gameObject);
         }
     }
 
     private void OnDrawGizmosSelected()
     {
-        // Solo dibujamos la esfera de visión para mantener el editor limpio
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, radioDeVision);
+
+        // Dibujamos el círculo del suelo para poder configurarlo fácil en el editor
+        if (puntoSuelo != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(puntoSuelo.position, radioSuelo);
+        }
     }
 }
