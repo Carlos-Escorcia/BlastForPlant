@@ -271,6 +271,7 @@ GameObject:
   - component: {fileID: 349730439}
   - component: {fileID: 349730438}
   - component: {fileID: 349730437}
+  - component: {fileID: 349730441}
   m_Layer: 0
   m_Name: "Se\xF1al"
   m_TagString: Untagged
@@ -308,8 +309,8 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 1
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: -0.050949097, y: -0.029719353}
@@ -420,6 +421,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &349730441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349730436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1b20aba95aadf43ab296585ecb6d90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CambioEscena
+  nombreSiguienteEscena: Nivel 2
 --- !u!1 &397384141
 GameObject:
   m_ObjectHideFlags: 0
@@ -1221,7 +1235,7 @@ Transform:
   m_GameObject: {fileID: 1328077555}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -22.02, y: -8.17, z: 0}
+  m_LocalPosition: {x: 50.45, y: -14.61, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
