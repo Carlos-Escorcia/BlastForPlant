@@ -18,7 +18,7 @@ public class ControlPersonaje : MonoBehaviour
 
     [Header("Sistema de Vidas e Interfaz")]
     public int vidas = 3;
-    public Animator animadorBarraVida; // Aquí arrastraremos la barra de vida
+    public Animator BarraVida; // Aquí arrastraremos la barra de vida
     public TextMeshProUGUI textoVidas;
     public string nombreEscenaGameOver = "GameOver";
 
@@ -127,9 +127,9 @@ public class ControlPersonaje : MonoBehaviour
         ActualizarUI(); // Actualizamos el texto antiguo (si aún está en la pantalla)
 
         // Si hemos conectado la barra de vida, le enviamos el número de vidas que nos quedan
-        if (animadorBarraVida != null)
+        if (BarraVida != null)
         {
-            animadorBarraVida.SetInteger("VidasActuales", vidas);
+            BarraVida.SetInteger("VidasActuales", vidas);
         }
     }
 
@@ -188,6 +188,9 @@ public class ControlPersonaje : MonoBehaviour
     private void ActualizarUI()
     {
         if (textoVidas != null) textoVidas.text = "Vidas: " + vidas;
+
+        // Esta es la línea mágica que te falta:
+        if (BarraVida != null) BarraVida.SetInteger("VidasActuales", vidas);
     }
 
     private void OnDrawGizmosSelected()
