@@ -1,35 +1,41 @@
 using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
 public class AudioFeedback : MonoBehaviour
 {
     [Header("Configuración de Sonido")]
+    [Tooltip("Arrastra aquí el archivo de sonido del clic")]
     public AudioClip sonidoClic;
-
-    private AudioSource audioSource;
-
-    private void Awake()
-    {
-        audioSource = GetComponent<AudioSource>();
-        audioSource.playOnAwake = false;
-    }
 
     public void ReproducirSonidoClic()
     {
-        // [Gema de Conocimiento]: El Debug.Log es el mejor amigo del programador.
-        // Si este mensaje NO aparece en la consola, significa que el OnClick() 
-        // del botón en el Inspector está mal conectado.
-        Debug.Log("¡El botón ha sido pulsado y ha llegado al script!");
-
         if (sonidoClic != null)
         {
-            // Si llega aquí, el código y la conexión están perfectos.
-            Debug.Log("¡El AudioClip existe, intentando reproducir por el altavoz!");
-            audioSource.PlayOneShot(sonidoClic);
+            // 1. Creamos un nuevo objeto vacío en el juego llamado "EfectoUI"
+            GameObject altavozTemporal = new GameObject("EfectoUI_" + sonidoClic.name);
+
+            // [Gema de Conocimiento]: DontDestroyOnLoad es una función mágica.
+            // Le dice a Unity: "Cuando cambies de escena, NO destruyas este objeto".
+            DontDestroyOnLoad(altavozTemporal);
+
+            // 2. Le añadimos un componente AudioSource a ese objeto vacío
+            AudioSource fuenteAudio = altavozTemporal.AddComponent<AudioSource>();
+
+            // 3. Lo configuramos para que sea 2D (se escuche perfecto) y le asignamos tu MP3
+            fuenteAudio.spatialBlend = 0f;
+            fuenteAudio.clip = sonidoClic;
+
+            // 4. ¡Le damos al Play!
+            fuenteAudio.Play();
+
+            // 5. Programamos su autodestrucción.
+            // Destroy(objeto, tiempo) eliminará el altavoz justo cuando termine de sonar el MP3.
+            Destroy(altavozTemporal, sonidoClic.length);
+
+            Debug.Log("Altavoz inmortal creado. Sonando y resistiendo el cambio de escena.");
         }
         else
         {
-            Debug.LogWarning("¡Error! La variable sonidoClic está vacía en el Inspector.");
+            Debug.LogWarning("Falta asignar el AudioClip en el Inspector.");
         }
     }
 }
