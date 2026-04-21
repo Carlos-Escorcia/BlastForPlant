@@ -121,6 +121,7 @@ MonoBehaviour:
   mochilaCerrada: {fileID: 6996492222815415416, guid: 33af87cdec61c8a4980973536320921e, type: 3}
   mochilaAbierta: {fileID: 3710196622539882684, guid: 33af87cdec61c8a4980973536320921e, type: 3}
   animadorMenu: {fileID: 0}
+  sonidoDelBoton: {fileID: 2582482436597201706}
   tiempoDeEspera: 0.5
 --- !u!1 &2482749632807825621
 GameObject:
@@ -387,18 +388,6 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: MenuPrincipal
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 6474691623873653770}
-        m_TargetAssemblyTypeName: AudioFeedback, Assembly-CSharp
-        m_MethodName: ReproducirSonidoClic
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!95 &8266928470703958453
