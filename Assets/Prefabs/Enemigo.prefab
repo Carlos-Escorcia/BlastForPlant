@@ -103,6 +103,7 @@ MonoBehaviour:
   fuerzaSaltoX: 3
   fuerzaSaltoY: 5
   tiempoEntreSaltos: 1.5
+  sonidoMuerte: {fileID: 8300000, guid: 8bb211d11fac5ac40899dd9ac5360582, type: 3}
   jugador: {fileID: 0}
 --- !u!212 &7964899831102834550
 SpriteRenderer:
