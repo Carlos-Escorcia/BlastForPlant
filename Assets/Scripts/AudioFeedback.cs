@@ -30,8 +30,6 @@ public class AudioFeedback : MonoBehaviour
             // 5. Programamos su autodestrucción.
             // Destroy(objeto, tiempo) eliminará el altavoz justo cuando termine de sonar el MP3.
             Destroy(altavozTemporal, sonidoClic.length);
-
-            Debug.Log("Altavoz inmortal creado. Sonando y resistiendo el cambio de escena.");
         }
         else
         {
