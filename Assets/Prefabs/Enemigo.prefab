@@ -103,7 +103,6 @@ MonoBehaviour:
   fuerzaSaltoX: 3
   fuerzaSaltoY: 5
   tiempoEntreSaltos: 1.5
-  sonidoMuerte: {fileID: 8300000, guid: 8bb211d11fac5ac40899dd9ac5360582, type: 3}
   jugador: {fileID: 0}
 --- !u!212 &7964899831102834550
 SpriteRenderer:
@@ -243,8 +242,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.41904134}
-  m_Radius: 0.35899672
+  m_Offset: {x: 0, y: 0.41787148}
+  m_Radius: 0.36016655
 --- !u!82 &-6005159816882102628
 AudioSource:
   m_ObjectHideFlags: 0

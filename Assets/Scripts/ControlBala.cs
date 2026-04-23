@@ -7,8 +7,7 @@ public class ControlBala : MonoBehaviour
     public float tiempoDeVida = 1.5f;
 
     [Header("Sistema de Loot")]
-    [Tooltip("Arrastra aquí tu PREFAB de la Vida Extra")]
-    public GameObject prefabVidaExtra;
+    public GameObject prefabVidaExtra; //Arrastrar el PREFAB aquí
 
     void Start()
     {
@@ -20,13 +19,9 @@ public class ControlBala : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemigo"))
         {
-            // --- EL SORTEO DEL BOTÍN (1/5) ---
             if (prefabVidaExtra != null)
             {
-                // Random.Range(0, 5) elige un número al azar: 0, 1, 2, 3 o 4. (Total 5 opciones)
-                int sorteo = Random.Range(0, 5);
-
-                // Si sale el 0 (una probabilidad de 1 entre 5), creamos la vida.
+              int sorteo = Random.Range(0, 5); //Elige un número al azar 0-4 
                 if (sorteo == 0)
                 {
                     Instantiate(prefabVidaExtra, collision.transform.position, Quaternion.identity);
