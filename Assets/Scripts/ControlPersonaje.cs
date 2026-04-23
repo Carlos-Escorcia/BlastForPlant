@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 using TMPro;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator), typeof(SpriteRenderer))]
-[RequireComponent(typeof(AudioSource))]
 public class ControlPersonaje : MonoBehaviour
 {
     [Header("Ajustes de Movimiento")]
@@ -20,19 +19,23 @@ public class ControlPersonaje : MonoBehaviour
     [Header("Sistema de Vidas e Interfaz")]
     public int vidas = 3;
     public Animator BarraVida;
+    public TextMeshProUGUI textoVidas;
     public string nombreEscenaGameOver = "GameOver";
 
-    [Header("Sistema de Disparo")]
+    [Header("Efectos de Sonido del Personaje")]
+    public AudioClip sonidoDaño;
+    public AudioClip sonidoDisparo; // Tu sonido de disparo
+    private AudioSource fuenteAudio;
+
+    [Header("Sistema de Disparo Fluido")]
     public GameObject prefabBala;
     public Transform puntoDeDisparo;
-    public float tiempoRecarga = 0.5f;
-    public float retrasoBala = 0.15f;
+    public float tiempoRecarga = 0.25f;
+    public float retrasoBala = 0.05f;
+    public float tiempoRecuperacion = 0.1f;
 
-    [Header("Efectos de Sonido del Personaje")]
-    [Tooltip("Arrastra aquí tu MP3 de cuando el personaje recibe daño")]
-    public AudioClip sonidoDaño; // <--- ¡AQUÍ ESTÁ TU NUEVA VARIABLE!
-
-    private AudioSource fuenteAudio;
+    // ¡AQUÍ ESTÁ LA VARIABLE QUE FALTABA!
+    private bool estaDisparando = false;
 
     // Variables internas de control
     private Rigidbody2D rb;
@@ -67,18 +70,27 @@ public class ControlPersonaje : MonoBehaviour
 
     void Update()
     {
-        movimientoHorizontal = Input.GetAxisRaw("Horizontal");
-        animator.SetFloat("Velocidad", Mathf.Abs(movimientoHorizontal));
+        // Si está disparando, no le dejamos moverse
+        if (estaDisparando)
+        {
+            movimientoHorizontal = 0f;
+            animator.SetFloat("Velocidad", 0f);
+        }
+        else
+        {
+            movimientoHorizontal = Input.GetAxisRaw("Horizontal");
+            animator.SetFloat("Velocidad", Mathf.Abs(movimientoHorizontal));
 
-        if (movimientoHorizontal > 0) transform.localScale = escalaInicial;
-        else if (movimientoHorizontal < 0) transform.localScale = new Vector3(-escalaInicial.x, escalaInicial.y, escalaInicial.z);
+            if (movimientoHorizontal > 0) transform.localScale = escalaInicial;
+            else if (movimientoHorizontal < 0) transform.localScale = new Vector3(-escalaInicial.x, escalaInicial.y, escalaInicial.z);
+        }
 
         enSuelo = Physics2D.OverlapCircle(controladorSuelo.position, radioSuelo, EsSuelo);
         animator.SetBool("EnSuelo", enSuelo);
 
         if (enSuelo) puedeDobleSalto = true;
 
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && !estaDisparando)
         {
             if (enSuelo) EjecutarSalto();
             else if (puedeDobleSalto)
@@ -113,23 +125,11 @@ public class ControlPersonaje : MonoBehaviour
         animator.SetTrigger("Saltar");
     }
 
-    // =========================================================
-    // --- SISTEMA DE DAÑO Y VIDAS ---
-    // =========================================================
-
-    public void RecibirDano()
+    public void RecibirDaño()
     {
         if (esInvulnerable) return;
 
-        // --- ¡AQUÍ REPRODUCIMOS EL SONIDO DE DAÑO! ---
-        if (sonidoDaño != null && fuenteAudio != null)
-        {
-            fuenteAudio.PlayOneShot(sonidoDaño);
-        }
-        else
-        {
-            Debug.LogWarning("¡Te han hecho daño pero no has puesto el MP3 en el Inspector!");
-        }
+        if (sonidoDaño != null && fuenteAudio != null) fuenteAudio.PlayOneShot(sonidoDaño);
 
         PerderVida();
 
@@ -140,6 +140,13 @@ public class ControlPersonaje : MonoBehaviour
     public void PerderVida()
     {
         vidas--;
+        ActualizarUI();
+    }
+
+    // El método para que la vida extra te cure
+    public void GanarVida()
+    {
+        vidas++;
         ActualizarUI();
     }
 
@@ -159,15 +166,18 @@ public class ControlPersonaje : MonoBehaviour
         spriteRenderer.enabled = true;
         esInvulnerable = false;
     }
-
-    // =========================================================
-    // --- SISTEMA DE DISPARO ---
-    // =========================================================
-
     private void Disparar()
     {
         if (Time.time >= tiempoUltimoDisparo + tiempoRecarga)
         {
+            estaDisparando = true; // Aquí activamos el bloqueo de movimiento
+
+            // Reproducimos el sonido
+            if (sonidoDisparo != null && fuenteAudio != null)
+            {
+                fuenteAudio.PlayOneShot(sonidoDisparo);
+            }
+
             animator.SetTrigger("Disparar");
             StartCoroutine(EsperarParaDisparar());
             tiempoUltimoDisparo = Time.time;
@@ -184,17 +194,19 @@ public class ControlPersonaje : MonoBehaviour
             float direccion = (transform.localScale.x > 0) ? 1f : -1f;
 
             ControlBala scriptBala = balaCreada.GetComponent<ControlBala>();
-            if (scriptBala != null)
-            {
-                scriptBala.velocidad = Mathf.Abs(scriptBala.velocidad) * direccion;
-            }
+            if (scriptBala != null) scriptBala.velocidad = Mathf.Abs(scriptBala.velocidad) * direccion;
 
             balaCreada.transform.localScale = new Vector3(Mathf.Abs(balaCreada.transform.localScale.x) * direccion, balaCreada.transform.localScale.y, balaCreada.transform.localScale.z);
         }
+
+        yield return new WaitForSeconds(tiempoRecuperacion);
+
+        estaDisparando = false; // ¡Y aquí lo liberamos de nuevo!
     }
 
     private void ActualizarUI()
     {
+        if (textoVidas != null) textoVidas.text = "Vidas: " + vidas;
         if (BarraVida != null) BarraVida.SetInteger("VidasActuales", vidas);
     }
 

@@ -231,12 +231,15 @@ MonoBehaviour:
     m_Bits: 64
   vidas: 3
   BarraVida: {fileID: 0}
+  textoVidas: {fileID: 0}
   nombreEscenaGameOver: GameOver
+  "sonidoDa\xF1o": {fileID: 8300000, guid: 8664c4c49c9cc374d84744fe469b42a4, type: 3}
+  sonidoDisparo: {fileID: 8300000, guid: 42dce38fb4bc68b45b8cf1bdb19a05d3, type: 3}
   prefabBala: {fileID: 389138862201261385, guid: c40351dbff833cc4c98f35df2d363b12, type: 3}
   puntoDeDisparo: {fileID: 5024820354504578369}
   tiempoRecarga: 0.3
   retrasoBala: 0.95
-  "sonidoDa\xF1o": {fileID: 8300000, guid: 8664c4c49c9cc374d84744fe469b42a4, type: 3}
+  tiempoRecuperacion: 0.1
 --- !u!61 &8608497781669910100
 BoxCollider2D:
   m_ObjectHideFlags: 0

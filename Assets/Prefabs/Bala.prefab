@@ -182,7 +182,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BalaComportamiento
   velocidad: 15
   tiempoDeVida: 1.5
-  sonidoAlNacer: {fileID: 8300000, guid: 42dce38fb4bc68b45b8cf1bdb19a05d3, type: 3}
+  prefabVidaExtra: {fileID: 2708580689424281746, guid: 425aa180473ae3a4b85d728d6b00aaad, type: 3}
 --- !u!82 &-3600049062293737034
 AudioSource:
   m_ObjectHideFlags: 0

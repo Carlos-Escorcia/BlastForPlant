@@ -81,7 +81,7 @@ public class ControlEnemigo : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             ControlPersonaje personaje = collision.gameObject.GetComponent<ControlPersonaje>();
-            if (personaje != null) personaje.RecibirDano();
+            if (personaje != null) personaje.RecibirDaño();
             Destroy(gameObject);
         }
     }
