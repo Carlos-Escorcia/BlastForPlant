@@ -143,7 +143,7 @@ public class ControlPersonaje : MonoBehaviour
         ActualizarUI();
     }
 
-    // El método para que la vida extra te cure
+    //El método para que la vida extra te cure
     public void GanarVida()
     {
         vidas++;
@@ -170,13 +170,7 @@ public class ControlPersonaje : MonoBehaviour
     {
         if (Time.time >= tiempoUltimoDisparo + tiempoRecarga)
         {
-            estaDisparando = true; // Aquí activamos el bloqueo de movimiento
-
-            // Reproducimos el sonido
-            if (sonidoDisparo != null && fuenteAudio != null)
-            {
-                fuenteAudio.PlayOneShot(sonidoDisparo);
-            }
+            estaDisparando = true;
 
             animator.SetTrigger("Disparar");
             StartCoroutine(EsperarParaDisparar());
@@ -186,7 +180,15 @@ public class ControlPersonaje : MonoBehaviour
 
     private IEnumerator EsperarParaDisparar()
     {
+        // 2º: Esperamos a que la animación haga el movimiento de sacar el arma
+        // (Este tiempo lo controlas desde el Inspector de Unity con "Retraso Bala")
         yield return new WaitForSeconds(retrasoBala);
+
+        // 3º: ¡AHORA SÍ! Aparece la bala, se mueve, y suena el PUM
+        if (sonidoDisparo != null && fuenteAudio != null)
+        {
+            fuenteAudio.PlayOneShot(sonidoDisparo);
+        }
 
         if (prefabBala != null && puntoDeDisparo != null)
         {
@@ -199,9 +201,10 @@ public class ControlPersonaje : MonoBehaviour
             balaCreada.transform.localScale = new Vector3(Mathf.Abs(balaCreada.transform.localScale.x) * direccion, balaCreada.transform.localScale.y, balaCreada.transform.localScale.z);
         }
 
+        // Esperamos un poquito para que no haga metralleta
         yield return new WaitForSeconds(tiempoRecuperacion);
 
-        estaDisparando = false; // ¡Y aquí lo liberamos de nuevo!
+        estaDisparando = false;
     }
 
     private void ActualizarUI()

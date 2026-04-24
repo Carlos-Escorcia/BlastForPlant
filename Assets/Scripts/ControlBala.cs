@@ -22,9 +22,11 @@ public class ControlBala : MonoBehaviour
             if (prefabVidaExtra != null)
             {
               int sorteo = Random.Range(0, 5); //Elige un número al azar 0-4 
+
                 if (sorteo == 0)
                 {
-                    Instantiate(prefabVidaExtra, collision.transform.position, Quaternion.identity);
+                    Vector3 posicionElevada = collision.transform.position + new Vector3(0f, 1f, 0f);
+                    Instantiate(prefabVidaExtra, posicionElevada, Quaternion.identity);
                 }
             }
 
