@@ -126,6 +126,8 @@ MonoBehaviour:
   tiempoDeEspera: 0.5
   sonidoAbrir: {fileID: 8300000, guid: 4098d3dcf48e24e4cb2174954e30ab1a, type: 3}
   sonidoCerrar: {fileID: 8300000, guid: 4098d3dcf48e24e4cb2174954e30ab1a, type: 3}
+  sonidoReiniciar: {fileID: 8300000, guid: ba6f68d229fc42f42afe0590b1c7bd19, type: 3}
+  tiempoEsperaReiniciar: 0.5
 --- !u!82 &3566636337503893097
 AudioSource:
   m_ObjectHideFlags: 0
@@ -453,6 +455,60 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &4100555129603976404
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9198037251839193901}
+  - component: {fileID: 835542351958680107}
+  m_Layer: 0
+  m_Name: BotonRepetir
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9198037251839193901
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4100555129603976404}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -832.8019, y: -47.74066, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2790574472450117821}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &835542351958680107
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4100555129603976404}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4852399939441623975
 GameObject:
   m_ObjectHideFlags: 0
@@ -490,7 +546,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -199, y: -343}
+  m_AnchoredPosition: {x: -199, y: -144}
   m_SizeDelta: {x: 49.6449, y: 18.1716}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4182942028233765313
@@ -653,6 +709,7 @@ Transform:
   m_Children:
   - {fileID: 1691998919786007636}
   - {fileID: 1881518946027400425}
+  - {fileID: 9198037251839193901}
   m_Father: {fileID: 3763062866243751456}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9212953895571308761

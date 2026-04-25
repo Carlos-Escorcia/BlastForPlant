@@ -20,14 +20,18 @@ public class ControlPausa : MonoBehaviour
     public AudioClip sonidoClic;
     public float tiempoDeEspera = 0.5f;
 
-    // ==========================================
-    // --- NUEVO: SONIDOS DE LA MOCHILA ---
-    // ==========================================
     [Header("Sonidos de la Mochila")]
     [Tooltip("Arrastra el MP3 para cuando se ABRE la pausa")]
     public AudioClip sonidoAbrir;
     [Tooltip("Arrastra el MP3 para cuando se CIERRA la pausa")]
     public AudioClip sonidoCerrar;
+
+    // ==========================================
+    // --- NUEVO: CONFIGURACIÓN REINICIAR ---
+    // ==========================================
+    [Header("Configuración Reiniciar")]
+    public AudioClip sonidoReiniciar;
+    public float tiempoEsperaReiniciar = 0.5f;
 
     private bool estaPausado = false;
     private AudioSource fuenteAudioUI; // Nuestro altavoz dedicado
@@ -72,6 +76,42 @@ public class ControlPausa : MonoBehaviour
         }
     }
 
+    // ==========================================
+    // --- FUNCIÓN DEL BOTÓN REINICIAR ---
+    // ==========================================
+    public void BotonReiniciarConEfecto()
+    {
+        StartCoroutine(RutinaReiniciar());
+    }
+
+    private IEnumerator RutinaReiniciar()
+    {
+        // 1. Volvemos a poner el tiempo a 1 para que la animación fluya
+        Time.timeScale = 1f;
+
+        // 2. Reproducimos el sonido de "Repetir"
+        if (sonidoReiniciar != null && fuenteAudioUI != null)
+        {
+            fuenteAudioUI.PlayOneShot(sonidoReiniciar);
+        }
+
+        // 3. Activamos la animación del botón
+        if (animadorMenu != null)
+        {
+            animadorMenu.SetTrigger("Pulsar");
+        }
+
+        // 4. Esperamos el tiempo necesario
+        yield return new WaitForSeconds(tiempoEsperaReiniciar);
+
+        // 5. Recargamos la escena actual
+        string nombreEscenaActual = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(nombreEscenaActual);
+    }
+
+    // ==========================================
+    // --- FUNCIÓN DEL BOTÓN IR AL MENÚ PRINCIPAL
+    // ==========================================
     public void BotonIrAlMenu(string nombreEscenaPrincipal)
     {
         StartCoroutine(CargarMenuConRetraso(nombreEscenaPrincipal));
