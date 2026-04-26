@@ -25,8 +25,10 @@ public class ControlPersonaje : MonoBehaviour
 
     [Header("Efectos de Sonido del Personaje")]
     public AudioClip sonidoDaño;
-    public AudioClip sonidoDisparo; // Tu sonido de disparo
-    private AudioSource fuenteAudio;
+    public AudioClip sonidoDisparo;
+    public AudioClip sonidoPaso;
+    public AudioClip sonidoSalto;
+    public float tiempoEntrePasos = 0.3f; // Ajusta este valor en el Inspector para sincronizarlo visualmente
 
     [Header("Sistema de Disparo Fluido")]
     public GameObject prefabBala;
@@ -35,19 +37,22 @@ public class ControlPersonaje : MonoBehaviour
     public float retrasoBala = 0.05f;
     public float tiempoRecuperacion = 0.1f;
 
-    // ¡AQUÍ ESTÁ LA VARIABLE QUE FALTABA!
     private bool estaDisparando = false;
 
     // Variables internas de control
     private Rigidbody2D rb;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
+    private AudioSource fuenteAudio;
     private bool esInvulnerable = false;
     private float tiempoUltimoDisparo = -10f;
     private float movimientoHorizontal;
     private Vector3 escalaInicial;
     private bool enSuelo;
     private bool puedeDobleSalto;
+
+    // Variable para controlar que el sonido del paso no se reproduzca a lo loco
+    private float siguienteTiempoPaso = 0f;
 
     void Awake()
     {
@@ -89,6 +94,22 @@ public class ControlPersonaje : MonoBehaviour
         enSuelo = Physics2D.OverlapCircle(controladorSuelo.position, radioSuelo, EsSuelo);
         animator.SetBool("EnSuelo", enSuelo);
 
+        // --- LÓGICA CORREGIDA DE LOS PASOS ---
+        // Si está tocando el suelo, se está moviendo y no está disparando...
+        if (enSuelo && Mathf.Abs(movimientoHorizontal) > 0 && !estaDisparando)
+        {
+            // Comprobamos si ya ha pasado el tiempo suficiente desde el último paso
+            if (Time.time >= siguienteTiempoPaso)
+            {
+                if (sonidoPaso != null && fuenteAudio != null)
+                {
+                    fuenteAudio.PlayOneShot(sonidoPaso);
+                }
+                // Programamos el siguiente paso sumándole los milisegundos de espera
+                siguienteTiempoPaso = Time.time + tiempoEntrePasos;
+            }
+        }
+
         if (enSuelo) puedeDobleSalto = true;
 
         if (Input.GetButtonDown("Jump") && !estaDisparando)
@@ -119,6 +140,12 @@ public class ControlPersonaje : MonoBehaviour
 
     private void EjecutarSalto()
     {
+        // Sonido al ejecutar el salto
+        if (sonidoSalto != null && fuenteAudio != null)
+        {
+            fuenteAudio.PlayOneShot(sonidoSalto);
+        }
+
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, fuerzaSalto);
         enSuelo = false;
@@ -144,10 +171,9 @@ public class ControlPersonaje : MonoBehaviour
         ActualizarUI();
     }
 
-    //El método para que la vida extra te cure
     public void GanarVida()
     {
-        if (vidas < vidasMaximas) //Si no ha llegado al tope de vida
+        if (vidas < vidasMaximas)
         {
             vidas++;
             ActualizarUI();
@@ -170,6 +196,7 @@ public class ControlPersonaje : MonoBehaviour
         spriteRenderer.enabled = true;
         esInvulnerable = false;
     }
+
     private void Disparar()
     {
         if (Time.time >= tiempoUltimoDisparo + tiempoRecarga)
@@ -184,11 +211,8 @@ public class ControlPersonaje : MonoBehaviour
 
     private IEnumerator EsperarParaDisparar()
     {
-        // 2º: Esperamos a que la animación haga el movimiento de sacar el arma
-        // (Este tiempo lo controlas desde el Inspector de Unity con "Retraso Bala")
         yield return new WaitForSeconds(retrasoBala);
 
-        // 3º: ¡AHORA SÍ! Aparece la bala, se mueve, y suena el PUM
         if (sonidoDisparo != null && fuenteAudio != null)
         {
             fuenteAudio.PlayOneShot(sonidoDisparo);
@@ -205,7 +229,6 @@ public class ControlPersonaje : MonoBehaviour
             balaCreada.transform.localScale = new Vector3(Mathf.Abs(balaCreada.transform.localScale.x) * direccion, balaCreada.transform.localScale.y, balaCreada.transform.localScale.z);
         }
 
-        // Esperamos un poquito para que no haga metralleta
         yield return new WaitForSeconds(tiempoRecuperacion);
 
         estaDisparando = false;

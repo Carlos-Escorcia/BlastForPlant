@@ -151,3 +151,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1c31e0841c14ea49b9170e0d2374c6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VidaExtra
+  velocidadFlote: 3
+  alturaFlote: 0.2
+  sonidoRecoger: {fileID: 8300000, guid: aa966267fa22d5c4db3587233167e18c, type: 3}

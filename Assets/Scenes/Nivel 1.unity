@@ -1213,7 +1213,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 80cf38437c532ba4281a192e5934f26d, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.8
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -9883,6 +9883,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2204025864853970472, guid: ee7e3c522312e9140b3ffd43c669cca4, type: 3}
   m_PrefabInstance: {fileID: 1817103134}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1802059844
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1165494137086180756, guid: 425aa180473ae3a4b85d728d6b00aaad, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -20.613163
+      objectReference: {fileID: 0}
+    - target: {fileID: 1165494137086180756, guid: 425aa180473ae3a4b85d728d6b00aaad, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -10.681644
+      objectReference: {fileID: 0}
+    - target: {fileID: 1165494137086180756, guid: 425aa180473ae3a4b85d728d6b00aaad, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1165494137086180756, guid: 425aa180473ae3a4b85d728d6b00aaad, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1165494137086180756, guid: 425aa180473ae3a4b85d728d6b00aaad, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1165494137086180756, guid: 425aa180473ae3a4b85d728d6b00aaad, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1165494137086180756, guid: 425aa180473ae3a4b85d728d6b00aaad, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1165494137086180756, guid: 425aa180473ae3a4b85d728d6b00aaad, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1165494137086180756, guid: 425aa180473ae3a4b85d728d6b00aaad, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1165494137086180756, guid: 425aa180473ae3a4b85d728d6b00aaad, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2708580689424281746, guid: 425aa180473ae3a4b85d728d6b00aaad, type: 3}
+      propertyPath: m_Name
+      value: "Coraz\xF3n"
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 425aa180473ae3a4b85d728d6b00aaad, type: 3}
 --- !u!1001 &1817103134
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10371,6 +10428,14 @@ PrefabInstance:
       propertyPath: BarraVida
       value: 
       objectReference: {fileID: 691896437}
+    - target: {fileID: 147735363735439733, guid: ff546adc7d005ce44a652e7def84d7d2, type: 3}
+      propertyPath: sonidoPaso
+      value: 
+      objectReference: {fileID: 8300000, guid: 38046c6f64558c240bbf9845ee89323c, type: 3}
+    - target: {fileID: 147735363735439733, guid: ff546adc7d005ce44a652e7def84d7d2, type: 3}
+      propertyPath: sonidoSalto
+      value: 
+      objectReference: {fileID: 8300000, guid: b4dbf4480efbf8c41b144dc60241e3df, type: 3}
     - target: {fileID: 6209695202463139246, guid: ff546adc7d005ce44a652e7def84d7d2, type: 3}
       propertyPath: m_Name
       value: Personaje
@@ -10620,3 +10685,4 @@ SceneRoots:
   - {fileID: 6262097267839596470}
   - {fileID: 980150122}
   - {fileID: 648521954}
+  - {fileID: 1802059844}
