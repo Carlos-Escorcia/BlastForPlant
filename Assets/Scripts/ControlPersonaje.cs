@@ -19,6 +19,7 @@ public class ControlPersonaje : MonoBehaviour
     [Header("Sistema de Vidas e Interfaz")]
     public int vidasMaximas = 3;
     public int vidas = 3;
+    public float tiempoInvulnerabilidad = 0.8f;
     public Animator BarraVida;
     public TextMeshProUGUI textoVidas;
     public string nombreEscenaGameOver = "GameOver";
@@ -183,10 +184,9 @@ public class ControlPersonaje : MonoBehaviour
     private IEnumerator RutinaInvulnerabilidad()
     {
         esInvulnerable = true;
-        float duracionParpadeo = 2f;
         float tiempoPasad = 0f;
 
-        while (tiempoPasad < duracionParpadeo)
+        while (tiempoPasad < tiempoInvulnerabilidad)
         {
             spriteRenderer.enabled = !spriteRenderer.enabled;
             yield return new WaitForSeconds(0.1f);

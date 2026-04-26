@@ -39,20 +39,12 @@ public class VidaExtra : MonoBehaviour
                     // Solo te cura si no estás al máximo
                     personaje.GanarVida();
                 }
-                else
-                {
-                    Debug.Log("¡Coges el corazón pero ya estás a tope de vida!");
-                }
-
-                // 2. ESTO AHORA PASA SIEMPRE QUE LO TOQUES (Lo necesites o no)
-                // Reproducimos el sonido
                 if (sonidoRecoger != null)
                 {
                     AudioSource.PlayClipAtPoint(sonidoRecoger, transform.position);
                 }
 
-                // Destruimos el corazón para que desaparezca
-                Destroy(gameObject);
+                Destroy(gameObject); //Destrucción objeto
             }
         }
     }
