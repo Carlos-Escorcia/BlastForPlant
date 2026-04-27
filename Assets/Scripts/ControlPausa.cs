@@ -117,8 +117,8 @@ public class ControlPausa : MonoBehaviour
 
         if (animadorMenu != null) animadorMenu.Play("Pulsado");
 
-        // Tu código original para ir al menú principal
-        if (sonidoClic != null)
+
+        if (sonidoClic != null) //Esto va al Menú Principal
         {
             GameObject altavozTemporal = new GameObject("EfectoUI_Clic");
             DontDestroyOnLoad(altavozTemporal);
