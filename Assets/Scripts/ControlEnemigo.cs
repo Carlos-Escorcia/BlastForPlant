@@ -76,13 +76,35 @@ public class ControlEnemigo : MonoBehaviour
         }
     }
 
+    // 1. CHOQUES SÓLIDOS (Para el jugador o si tu bala no es Trigger)
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        // Si choca contra el jugador, hace daño y NO suma puntos
         if (collision.gameObject.CompareTag("Player"))
         {
             ControlPersonaje personaje = collision.gameObject.GetComponent<ControlPersonaje>();
             if (personaje != null) personaje.RecibirDaño();
+
             Destroy(gameObject);
+        }
+        // Si la bala es un objeto sólido
+        else if (collision.gameObject.CompareTag("Bala"))
+        {
+            FindFirstObjectByType<ControlContador>().SumarBaja();
+            Destroy(collision.gameObject); // Destruye la bala
+            Destroy(gameObject); // Destruye al enemigo
+        }
+    }
+
+    // 2. CHOQUES TIPO TRIGGER (Esto es lo que seguramente usa tu bala)
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Si lo que le atraviesa es la bala
+        if (collision.gameObject.CompareTag("Bala"))
+        {
+            FindFirstObjectByType<ControlContador>().SumarBaja();
+            Destroy(collision.gameObject); // Destruye la bala
+            Destroy(gameObject); // Destruye al enemigo
         }
     }
 
