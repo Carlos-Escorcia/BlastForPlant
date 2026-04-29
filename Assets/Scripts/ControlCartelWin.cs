@@ -1,19 +1,32 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement; // Necesario para cambiar de escena
+using UnityEngine.SceneManagement;
 
 public class ControlCartelWin : MonoBehaviour
 {
     [Header("Configuración")]
-    public Animator animatorArbol; // Arrastra tu árbol aquí
-    public string nombreEscenaWin = "Win"; // El nombre exacto de tu escena
-    public float tiempoEsperaExtra = 0.5f; // Unos segundos de margen al acabar
+    public GameObject arbol;
+    public string nombreEscenaWin = "Win";
+    public float tiempoEsperaExtra = 0.5f;
 
-    private bool yaActivado = false; // Evita que se active 20 veces si te quedas quieto en el cartel
+    [Header("Sonidos")]
+    public AudioClip sonidoTocarCartel; // <--- EL NUEVO SONIDO DEL CARTEL
+    public AudioClip sonidoCrecer;      // El sonido del árbol
+
+    private Animator animatorArbol;
+    private bool yaActivado = false;
+
+    void Start()
+    {
+        if (arbol != null)
+        {
+            animatorArbol = arbol.GetComponent<Animator>();
+            arbol.SetActive(false);
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Si nos toca el jugador y aún no se ha activado
         if (collision.CompareTag("Player") && !yaActivado)
         {
             yaActivado = true;
@@ -23,19 +36,41 @@ public class ControlCartelWin : MonoBehaviour
 
     private IEnumerator SecuenciaVictoria()
     {
-        // 1. Damos la orden de que empiece la animación del árbol
-        animatorArbol.SetTrigger("Crecer");
+        // 1. REPRODUCIMOS EL SONIDO DEL CARTEL Y ESPERAMOS
+        if (sonidoTocarCartel != null)
+        {
+            AudioSource.PlayClipAtPoint(sonidoTocarCartel, Camera.main.transform.position);
 
-        // 2. Esperamos una pequeñísima fracción de segundo para que Unity empiece a reproducirla
-        yield return new WaitForSeconds(0.1f);
+            // Le decimos al código que espere exactamente los segundos que dura este audio
+            yield return new WaitForSeconds(sonidoTocarCartel.length);
+        }
 
-        // 3. Leemos cuánto dura exactamente la animación actual del árbol
-        float duracionAnimacion = animatorArbol.GetCurrentAnimatorStateInfo(0).length;
+        // 2. APAGAMOS EL CARTEL (Ahora sí, después de que acabe el primer sonido)
+        GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<Collider2D>().enabled = false;
 
-        // 4. Pausamos este script hasta que la animación termine (+ un tiempo extra para que no sea un corte brusco)
-        yield return new WaitForSeconds(duracionAnimacion + tiempoEsperaExtra);
+        if (arbol != null)
+        {
+            // 3. PREPARAMOS EL ÁRBOL
+            arbol.transform.position = transform.position;
+            arbol.SetActive(true);
 
-        // 5. ¡Cambiamos a la pantalla de victoria!
+            // 4. REPRODUCIMOS EL SONIDO DEL ÁRBOL
+            if (sonidoCrecer != null)
+            {
+                AudioSource.PlayClipAtPoint(sonidoCrecer, Camera.main.transform.position);
+            }
+
+            // 5. ANIMACIÓN Y ESPERA FINAL
+            animatorArbol.SetTrigger("Crecer");
+
+            yield return new WaitForSeconds(0.1f);
+
+            float duracionAnimacion = animatorArbol.GetCurrentAnimatorStateInfo(0).length;
+            yield return new WaitForSeconds(duracionAnimacion + tiempoEsperaExtra);
+        }
+
+        // 6. ¡VICTORIA!
         SceneManager.LoadScene(nombreEscenaWin);
     }
 }
