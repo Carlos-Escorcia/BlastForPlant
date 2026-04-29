@@ -61,6 +61,9 @@ public class ControlCartelWin : MonoBehaviour
                 AudioSource.PlayClipAtPoint(sonidoCrecer, Camera.main.transform.position);
             }
 
+            // --- LA LÍNEA MÁGICA: Esperamos 1 frame para que el Animator "despierte" ---
+            yield return null;
+
             // 5. ANIMACIÓN Y ESPERA FINAL
             animatorArbol.SetTrigger("Crecer");
 

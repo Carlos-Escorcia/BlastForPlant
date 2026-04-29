@@ -154,3 +154,5 @@ MonoBehaviour:
   arbol: {fileID: 6766283695748667229, guid: 1f101a0c30b524347bb530815ba2beb7, type: 3}
   nombreEscenaWin: Win
   tiempoEsperaExtra: 0.5
+  sonidoTocarCartel: {fileID: 8300000, guid: 3d6150afe9477364a9fd52bd2a7bd3c5, type: 3}
+  sonidoCrecer: {fileID: 8300000, guid: 95655c03c9c914d4fb80ec8a532aac8b, type: 3}
