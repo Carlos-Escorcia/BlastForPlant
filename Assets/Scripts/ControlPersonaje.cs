@@ -24,6 +24,8 @@ public class ControlPersonaje : MonoBehaviour
     public Transform controladorSuelo;
     public float radioSuelo = 0.2f;
     public LayerMask EsSuelo;
+    [Tooltip("Capa exclusiva de los Tilemaps para que suenen los pasos")]
+    public LayerMask EsTile;
 
     [Header("Sistema de Vidas e Interfaz")]
     public int vidasMaximas = 3;
@@ -63,6 +65,10 @@ public class ControlPersonaje : MonoBehaviour
     private bool enSuelo;
     private bool puedeDobleSalto;
     private float siguienteTiempoPaso = 0f;
+    private bool pisandoTile;
+
+    // Variable de estado para saber si el jugador ha muerto
+    private bool estaMuerto = false;
 
     void Awake()
     {
@@ -78,7 +84,6 @@ public class ControlPersonaje : MonoBehaviour
         }
     }
 
-    // --- ESTO ES NUEVO Y VITAL: Activar y desactivar el mapa azul ---
     private void OnEnable()
     {
         if (accionMover != null) accionMover.action.Enable();
@@ -92,7 +97,6 @@ public class ControlPersonaje : MonoBehaviour
         if (accionSaltar != null) accionSaltar.action.Disable();
         if (accionDisparar != null) accionDisparar.action.Disable();
     }
-    // -----------------------------------------------------------------
 
     void Start()
     {
@@ -102,6 +106,9 @@ public class ControlPersonaje : MonoBehaviour
 
     void Update()
     {
+        // Si el personaje está muerto, bloqueamos el resto del código completamente
+        if (estaMuerto) return;
+
         // 1. LEEMOS EL MAPA AZUL DIRECTAMENTE
         float inputMando = 0f;
         bool botonSalto = false;
@@ -131,8 +138,10 @@ public class ControlPersonaje : MonoBehaviour
         enSuelo = Physics2D.OverlapCircle(controladorSuelo.position, radioSuelo, EsSuelo);
         animator.SetBool("EnSuelo", enSuelo);
 
+        pisandoTile = Physics2D.OverlapCircle(controladorSuelo.position, radioSuelo, EsTile);
+
         // Pasos
-        if (enSuelo && Mathf.Abs(movimientoHorizontal) > 0 && !estaDisparando)
+        if (pisandoTile && Mathf.Abs(movimientoHorizontal) > 0 && !estaDisparando)
         {
             if (Time.time >= siguienteTiempoPaso)
             {
@@ -169,6 +178,9 @@ public class ControlPersonaje : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // Si está muerto, bloqueamos el movimiento de físicas
+        if (estaMuerto) return;
+
         rb.linearVelocity = new Vector2(movimientoHorizontal * velocidadMovimiento, rb.linearVelocity.y);
     }
 
@@ -188,14 +200,25 @@ public class ControlPersonaje : MonoBehaviour
 
     public void RecibirDaño()
     {
-        if (esInvulnerable) return;
+        // Bloqueo estricto: Si ya murió, no ejecuta absolutamente nada más
+        if (esInvulnerable || estaMuerto) return;
 
+        // NUEVO - El "Martillazo": Cortamos cualquier sonido de paso o salto inmediatamente.
+        if (fuenteAudio != null) fuenteAudio.Stop();
+
+        // Ahora sí, reproducimos el sonido del daño limpio.
         if (sonidoDaño != null && fuenteAudio != null) fuenteAudio.PlayOneShot(sonidoDaño);
 
         PerderVida();
 
-        if (vidas <= 0) SceneManager.LoadScene(nombreEscenaGame_Over);
-        else StartCoroutine(RutinaInvulnerabilidad());
+        if (vidas <= 0)
+        {
+            StartCoroutine(MuerteConRetraso());
+        }
+        else
+        {
+            StartCoroutine(RutinaInvulnerabilidad());
+        }
     }
 
     public void PerderVida()
@@ -227,6 +250,32 @@ public class ControlPersonaje : MonoBehaviour
 
         spriteRenderer.enabled = true;
         esInvulnerable = false;
+    }
+
+    private IEnumerator MuerteConRetraso()
+    {
+        // 1. Apagamos sistemas internos
+        estaMuerto = true;
+        esInvulnerable = true;
+
+        // 2. NUEVO: Reseteamos los valores a mano para que el Animator no piense que sigues caminando
+        movimientoHorizontal = 0f;
+        if (animator != null)
+        {
+            animator.SetFloat("Velocidad", 0f);
+        }
+
+        // 3. Lo ocultamos y detenemos físicas
+        spriteRenderer.enabled = false;
+        rb.linearVelocity = Vector2.zero;
+        rb.simulated = false;
+
+        // 4. Esperamos a que suene el hit de muerte
+        float tiempoEspera = (sonidoDaño != null) ? sonidoDaño.length : 1f;
+        yield return new WaitForSeconds(tiempoEspera);
+
+        // 5. Cambiamos de escena
+        SceneManager.LoadScene(nombreEscenaGame_Over);
     }
 
     private void Disparar()
