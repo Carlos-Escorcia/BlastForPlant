@@ -1,11 +1,11 @@
 using UnityEngine;
-using System.Collections; // NUEVO: Necesario para usar las Corrutinas
+using System.Collections;
 
 [RequireComponent(typeof(Animator), typeof(Rigidbody2D))]
 public class ControlEnemigo2 : MonoBehaviour
 {
     [Header("Configuración de Visión y Movimiento")]
-    public float distanciaDeteccion = 8f; // A qué distancia te ve
+    public float distanciaDeteccion = 8f;
     [Tooltip("Velocidad a la que camina hacia ti (ej. 2 o 4)")]
     public float velocidadMovimiento = 2f;
     [Tooltip("Distancia a la que se detiene para dispararte")]
@@ -26,7 +26,7 @@ public class ControlEnemigo2 : MonoBehaviour
     private Animator animator;
     private Rigidbody2D rb;
     private float temporizadorDisparo;
-    private bool estaDisparando = false; // Nueva variable para controlar la animación
+    private bool estaDisparando = false;
 
     void Start()
     {
@@ -45,67 +45,49 @@ public class ControlEnemigo2 : MonoBehaviour
     {
         if (jugador == null) return;
 
-        // Comprobar la distancia entre el enemigo y el jugador
         float distanciaAlJugador = Vector2.Distance(transform.position, jugador.position);
 
-        // Si estamos dentro del rango de visión (nos ha detectado)
         if (distanciaAlJugador <= distanciaDeteccion)
         {
             MirarAlJugador();
 
-            // 1. LÓGICA DE DISPARO
             temporizadorDisparo -= Time.deltaTime;
-            // Solo dispara si el temporizador llega a 0 Y además no está ya disparando
+
             if (temporizadorDisparo <= 0 && !estaDisparando)
             {
                 StartCoroutine(RutinaAtaque());
                 temporizadorDisparo = tiempoEntreDisparos;
             }
 
-            // 2. LÓGICA DE MOVIMIENTO HORIZONTAL
-            // Solo camina si NO está disparando y si aún no está demasiado cerca
             if (!estaDisparando && distanciaAlJugador > distanciaMinima)
             {
-                // Calcula si el jugador está a la derecha (1) o izquierda (-1)
                 float direccionX = Mathf.Sign(jugador.position.x - transform.position.x);
-                // Le aplica velocidad horizontal manteniendo su gravedad natural
                 rb.linearVelocity = new Vector2(direccionX * velocidadMovimiento, rb.linearVelocity.y);
             }
             else if (!estaDisparando)
             {
-                // Si ya está lo suficientemente cerca, se detiene
                 rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
             }
         }
         else
         {
-            // Si el jugador se aleja mucho (fuera del rango de visión), se detiene
             rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
             temporizadorDisparo = 0.5f;
         }
     }
 
-    // NUEVO: La corrutina que sincroniza a la perfección la animación con el proyectil
     private IEnumerator RutinaAtaque()
     {
         estaDisparando = true;
-
-        // 1. Lo detenemos en seco para que no resbale por el suelo mientras dispara
         rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
-
-        // 2. Activamos la animación de ataque
         animator.SetBool("Atacando", true);
 
-        // 3. Esperamos una fracción de segundo para que coincida con el fotograma donde "escupe"
         yield return new WaitForSeconds(retrasoAnimacionDisparo);
 
-        // 4. Creamos la baba (proyectil)
         DispararBaba();
 
-        // 5. Esperamos un poco más para que la animación termine visualmente
         yield return new WaitForSeconds(0.3f);
 
-        // 6. Volvemos al estado Idle (parado)
         animator.SetBool("Atacando", false);
         estaDisparando = false;
     }
@@ -145,6 +127,23 @@ public class ControlEnemigo2 : MonoBehaviour
         transform.localScale = escala;
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Si el slime choca físicamente contra el jugador
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            // Buscamos el componente del jugador para restarle vida
+            ControlPersonaje personaje = collision.gameObject.GetComponent<ControlPersonaje>();
+            if (personaje != null)
+            {
+                personaje.RecibirDaño();
+            }
+
+            // Destruimos a este enemigo (el slime)
+            Destroy(gameObject);
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Bala"))
@@ -160,11 +159,9 @@ public class ControlEnemigo2 : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        // Círculo rojo: Rango de visión
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, distanciaDeteccion);
 
-        // Círculo azul: Distancia mínima a la que se detiene
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, distanciaMinima);
     }
