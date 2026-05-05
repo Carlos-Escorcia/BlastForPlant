@@ -390,7 +390,7 @@ Transform:
   m_GameObject: {fileID: 372349376}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.1, y: -2, z: -10}
+  m_LocalPosition: {x: -16.4, y: -6.3, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -405,14 +405,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 372349376}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e089bcf0460ad7049a34d02ada7c229c, type: 3}
+  m_Script: {fileID: 11500000, guid: 05cc61ff71338dc47a16a891ebc4f605, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CamaraSigueJugadorTotal
-  jugador: {fileID: 5629412112785561647}
+  m_EditorClassIdentifier: Assembly-CSharp::CamaraPrincipal
+  objetivo: {fileID: 5629412112785561647}
+  suavizado: 0.125
   offset: {x: 0, y: 0, z: -10}
-  suavizado: 0
-  seguirEnX: 1
-  seguirEnY: 1
+  puedeSeguir: 1
 --- !u!1001 &396712419
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -546,7 +545,7 @@ Transform:
   m_GameObject: {fileID: 430858165}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 43.69, y: -10.36, z: 0}
+  m_LocalPosition: {x: 68, y: -8.9, z: 0}
   m_LocalScale: {x: 0.84, y: 0.85, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -606,7 +605,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 156.09601, y: 10.747753}
+  m_Size: {x: 218.29236, y: 10.747753}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -620,12 +619,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 430858165}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdeae8ac492ba6a4586107e9b89bbe46, type: 3}
+  m_Script: {fileID: 11500000, guid: f26594efc6f4f2f489491aa0899df621, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EfectoParalax2
+  m_EditorClassIdentifier: Assembly-CSharp::EfectoParalax
   camaraTransform: {fileID: 372349381}
-  efectoParallax: 0
+  efectoParallax: 0.2
   seguirEnVertical: 1
+  offsetVertical: 0
   correccionSolapamiento: 0.05
 --- !u!4 &455567477 stripped
 Transform:
@@ -697,7 +697,7 @@ Transform:
   m_GameObject: {fileID: 511309284}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 38.92, y: -9.96, z: 0}
+  m_LocalPosition: {x: 65.5783, y: -11.0318, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -757,7 +757,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 138.63805, y: 10.666765}
+  m_Size: {x: 191.95467, y: 11.738457}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -771,12 +771,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 511309284}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdeae8ac492ba6a4586107e9b89bbe46, type: 3}
+  m_Script: {fileID: 11500000, guid: f26594efc6f4f2f489491aa0899df621, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EfectoParalax2
+  m_EditorClassIdentifier: Assembly-CSharp::EfectoParalax
   camaraTransform: {fileID: 372349381}
-  efectoParallax: 0
+  efectoParallax: 0.4
   seguirEnVertical: 1
+  offsetVertical: 0
   correccionSolapamiento: 0.05
 --- !u!1 &511359923
 GameObject:
@@ -805,7 +806,7 @@ Transform:
   m_GameObject: {fileID: 511359923}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 50.84, y: -11.1, z: 0}
+  m_LocalPosition: {x: 66.5135, y: -10.4301, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -865,7 +866,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 150, y: 10.8}
+  m_Size: {x: 181.34695, y: 10.130193}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -879,12 +880,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 511359923}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdeae8ac492ba6a4586107e9b89bbe46, type: 3}
+  m_Script: {fileID: 11500000, guid: f26594efc6f4f2f489491aa0899df621, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EfectoParalax2
+  m_EditorClassIdentifier: Assembly-CSharp::EfectoParalax
   camaraTransform: {fileID: 372349381}
-  efectoParallax: 0
+  efectoParallax: 0.8
   seguirEnVertical: 1
+  offsetVertical: 0
   correccionSolapamiento: 0.05
 --- !u!1001 &515856155
 PrefabInstance:
@@ -1043,7 +1045,7 @@ Transform:
   m_GameObject: {fileID: 814302506}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 45.5, y: -11.25, z: 0}
+  m_LocalPosition: {x: 69.5, y: -10.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1103,7 +1105,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 138.4604, y: 9.222649}
+  m_Size: {x: 186.68646, y: 10.026417}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1117,12 +1119,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 814302506}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdeae8ac492ba6a4586107e9b89bbe46, type: 3}
+  m_Script: {fileID: 11500000, guid: f26594efc6f4f2f489491aa0899df621, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EfectoParalax2
+  m_EditorClassIdentifier: Assembly-CSharp::EfectoParalax
   camaraTransform: {fileID: 372349381}
-  efectoParallax: 0
+  efectoParallax: 0.6
   seguirEnVertical: 1
+  offsetVertical: 0
   correccionSolapamiento: 0.05
 --- !u!114 &822008345 stripped
 MonoBehaviour:
@@ -1500,12 +1503,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1688210755}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdeae8ac492ba6a4586107e9b89bbe46, type: 3}
+  m_Script: {fileID: 11500000, guid: f26594efc6f4f2f489491aa0899df621, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EfectoParalax2
+  m_EditorClassIdentifier: Assembly-CSharp::EfectoParalax
   camaraTransform: {fileID: 372349381}
-  efectoParallax: 0
+  efectoParallax: 1
   seguirEnVertical: 1
+  offsetVertical: 0
   correccionSolapamiento: 0.05
 --- !u!4 &1746898208 stripped
 Transform:
