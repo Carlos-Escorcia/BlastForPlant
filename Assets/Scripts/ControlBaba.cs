@@ -2,29 +2,47 @@ using UnityEngine;
 
 public class ControlBaba : MonoBehaviour
 {
-    public float daño = 1f; // Aunque tu sistema usa vidas enteras, lo dejamos por si acaso
-    public float tiempoDeVida = 3f; // Destruir después de unos segundos si no toca nada
+    [Header("Configuración Básica")]
+    public float tiempoDeVida = 3f;
+
+    [Tooltip("El Tag de tu jugador")]
+    public string tagJugador = "Player";
+
+    [Tooltip("El Tag del enemigo para que no se dispare a sí mismo")]
+    public string tagEnemigo = "Enemigo";
 
     void Start()
     {
-        // Destruir automáticamente después de un tiempo para no saturar la memoria
         Destroy(gameObject, tiempoDeVida);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Si la baba toca al jugador
-        if (collision.gameObject.CompareTag("Player"))
+        ProcesarImpacto(collision.gameObject);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        ProcesarImpacto(collision.gameObject);
+    }
+
+    private void ProcesarImpacto(GameObject objetoTocado)
+    {
+        // 1. Si la baba choca contra el enemigo que la escupió, lo ignoramos
+        if (objetoTocado.CompareTag(tagEnemigo)) return;
+
+        // 2. Si toca al jugador, restamos vida
+        if (objetoTocado.CompareTag(tagJugador))
         {
-            ControlPersonaje personaje = collision.gameObject.GetComponent<ControlPersonaje>();
+            ControlPersonaje personaje = objetoTocado.GetComponent<ControlPersonaje>();
             if (personaje != null)
             {
-                personaje.RecibirDaño(); // Usamos el método que ya tienes en tu jugador
+                personaje.RecibirDaño();
             }
-            Destroy(gameObject); // Destruir la baba al impactar
+            Destroy(gameObject);
         }
-        // Si toca el suelo o las paredes (asegúrate de que tu capa de suelo se llame "Ground" o cambia esto)
-        else if (collision.gameObject.layer == LayerMask.NameToLayer("EsSuelo") || collision.gameObject.layer == LayerMask.NameToLayer("EsTile"))
+        // 3. Si toca el suelo, una pared, el techo o cualquier cosa sólida... se destruye.
+        else
         {
             Destroy(gameObject);
         }

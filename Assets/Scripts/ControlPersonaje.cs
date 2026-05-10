@@ -32,7 +32,6 @@ public class ControlPersonaje : MonoBehaviour
     public int vidas = 3;
     public float tiempoInvulnerabilidad = 0.8f;
     public Animator BarraVida;
-    public TextMeshProUGUI textoVidas;
     public string nombreEscenaGame_Over = "Game Over";
 
     [Header("Efectos de Sonido del Personaje")]
@@ -317,7 +316,6 @@ public class ControlPersonaje : MonoBehaviour
 
     private void ActualizarUI()
     {
-        if (textoVidas != null) textoVidas.text = "Vidas: " + vidas;
         if (BarraVida != null) BarraVida.SetInteger("VidasActuales", vidas);
     }
 

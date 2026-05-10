@@ -5,17 +5,14 @@ using System.Collections;
 public class ControlEnemigo2 : MonoBehaviour
 {
     [Header("Configuración de Visión y Movimiento")]
-    public float distanciaDeteccion = 8f;
-    [Tooltip("Velocidad a la que camina hacia ti (ej. 2 o 4)")]
+    public float distanciaDeteccion = 10f;
     public float velocidadMovimiento = 2f;
-    [Tooltip("Distancia a la que se detiene para dispararte")]
     public float distanciaMinima = 3f;
 
     [Header("Configuración de Disparo")]
     public GameObject prefabBaba;
     public Transform puntoDisparo;
     public float tiempoEntreDisparos = 2f;
-    [Tooltip("Milisegundos que espera para que la baba salga justo cuando abre la boca")]
     public float retrasoAnimacionDisparo = 0.2f;
 
     [Header("Fuerza de la Parábola")]
@@ -33,12 +30,8 @@ public class ControlEnemigo2 : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
 
-        // Buscar al jugador automáticamente por su tag
         GameObject objJugador = GameObject.FindGameObjectWithTag("Player");
-        if (objJugador != null)
-        {
-            jugador = objJugador.transform;
-        }
+        if (objJugador != null) jugador = objJugador.transform;
     }
 
     void Update()
@@ -49,75 +42,59 @@ public class ControlEnemigo2 : MonoBehaviour
 
         if (distanciaAlJugador <= distanciaDeteccion)
         {
-            MirarAlJugador();
-
-            temporizadorDisparo -= Time.deltaTime;
-
-            if (temporizadorDisparo <= 0 && !estaDisparando)
+            float diferenciaX = jugador.position.x - transform.position.x;
+            if (Mathf.Abs(diferenciaX) > 0.1f)
             {
-                StartCoroutine(RutinaAtaque());
-                temporizadorDisparo = tiempoEntreDisparos;
+                if (diferenciaX > 0 && transform.localScale.x < 0) Girar();
+                else if (diferenciaX < 0 && transform.localScale.x > 0) Girar();
+            }
+
+            if (!estaDisparando && Time.time >= temporizadorDisparo)
+            {
+                StartCoroutine(RutinaDisparar());
+                temporizadorDisparo = Time.time + tiempoEntreDisparos;
             }
 
             if (!estaDisparando && distanciaAlJugador > distanciaMinima)
             {
-                float direccionX = Mathf.Sign(jugador.position.x - transform.position.x);
-                rb.linearVelocity = new Vector2(direccionX * velocidadMovimiento, rb.linearVelocity.y);
+                Vector2 objetivo = new Vector2(jugador.position.x, transform.position.y);
+                transform.position = Vector2.MoveTowards(transform.position, objetivo, velocidadMovimiento * Time.deltaTime);
+
+                // animator.SetBool("Caminando", true); // <-- APAGADO PARA EVITAR EL ERROR
             }
-            else if (!estaDisparando)
+            else
             {
-                rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+                // animator.SetBool("Caminando", false); // <-- APAGADO PARA EVITAR EL ERROR
             }
         }
         else
         {
-            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
-            temporizadorDisparo = 0.5f;
+            // animator.SetBool("Caminando", false); // <-- APAGADO PARA EVITAR EL ERROR
         }
     }
 
-    private IEnumerator RutinaAtaque()
+    private IEnumerator RutinaDisparar()
     {
         estaDisparando = true;
-        rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
-        animator.SetBool("Atacando", true);
+
+        // animator.SetTrigger("Disparar"); // <-- APAGADO PARA EVITAR EL ERROR (AQUÍ ESTABA EL PROBLEMA)
 
         yield return new WaitForSeconds(retrasoAnimacionDisparo);
 
-        DispararBaba();
-
-        yield return new WaitForSeconds(0.3f);
-
-        animator.SetBool("Atacando", false);
-        estaDisparando = false;
-    }
-
-    private void DispararBaba()
-    {
         if (prefabBaba != null && puntoDisparo != null)
         {
-            GameObject baba = Instantiate(prefabBaba, puntoDisparo.position, Quaternion.identity);
+            GameObject babaCreada = Instantiate(prefabBaba, puntoDisparo.position, Quaternion.identity);
+            Rigidbody2D rbBaba = babaCreada.GetComponent<Rigidbody2D>();
 
-            Rigidbody2D rbBaba = baba.GetComponent<Rigidbody2D>();
             if (rbBaba != null)
             {
-                float direccionX = transform.localScale.x;
-                Vector2 fuerza = new Vector2(fuerzaDisparoX * direccionX, fuerzaDisparoY);
-                rbBaba.AddForce(fuerza, ForceMode2D.Impulse);
+                float direccionX = (transform.localScale.x > 0) ? 1f : -1f;
+                rbBaba.linearVelocity = new Vector2(fuerzaDisparoX * direccionX, fuerzaDisparoY);
             }
         }
-    }
 
-    private void MirarAlJugador()
-    {
-        if (jugador.position.x > transform.position.x && transform.localScale.x < 0)
-        {
-            Girar();
-        }
-        else if (jugador.position.x < transform.position.x && transform.localScale.x > 0)
-        {
-            Girar();
-        }
+        yield return new WaitForSeconds(0.5f);
+        estaDisparando = false;
     }
 
     private void Girar()
@@ -129,17 +106,10 @@ public class ControlEnemigo2 : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Si el slime choca físicamente contra el jugador
         if (collision.gameObject.CompareTag("Player"))
         {
-            // Buscamos el componente del jugador para restarle vida
             ControlPersonaje personaje = collision.gameObject.GetComponent<ControlPersonaje>();
-            if (personaje != null)
-            {
-                personaje.RecibirDaño();
-            }
-
-            // Destruimos a este enemigo (el slime)
+            if (personaje != null) personaje.RecibirDaño();
             Destroy(gameObject);
         }
     }
@@ -149,20 +119,9 @@ public class ControlEnemigo2 : MonoBehaviour
         if (collision.gameObject.CompareTag("Bala"))
         {
             Destroy(collision.gameObject);
-
             ControlContador contador = Object.FindFirstObjectByType<ControlContador>();
             if (contador != null) contador.SumarBaja();
-
             Destroy(gameObject);
         }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, distanciaDeteccion);
-
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, distanciaMinima);
     }
 }

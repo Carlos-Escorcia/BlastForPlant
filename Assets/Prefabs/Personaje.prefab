@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 189246783354784434}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.051, y: -0.051, z: 0}
+  m_LocalPosition: {x: -0.071, y: -0.044, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -235,11 +235,12 @@ MonoBehaviour:
   EsTile:
     serializedVersion: 2
     m_Bits: 64
+  controladorMuro: {fileID: 0}
+  radioMuro: 0.2
   vidasMaximas: 3
   vidas: 3
   tiempoInvulnerabilidad: 0.8
   BarraVida: {fileID: 0}
-  textoVidas: {fileID: 0}
   nombreEscenaGame_Over: Game Over
   "sonidoDa\xF1o": {fileID: 8300000, guid: 8664c4c49c9cc374d84744fe469b42a4, type: 3}
   sonidoDisparo: {fileID: 8300000, guid: 42dce38fb4bc68b45b8cf1bdb19a05d3, type: 3}
