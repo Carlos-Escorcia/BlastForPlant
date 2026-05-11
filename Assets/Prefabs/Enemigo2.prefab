@@ -317,7 +317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d7a2767e73716c4e9910b6b5092f08a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControlEnemigo2
-  distanciaDeteccion: 8
+  distanciaDeteccion: 6
   velocidadMovimiento: 1.85
   distanciaMinima: 2.35
   prefabBaba: {fileID: 4220930776616795507, guid: d0812abab5e62b04fa575633276c1625, type: 3}
