@@ -2515,6 +2515,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControlContador
   textoPantalla: {fileID: 822008345}
+  prefijoTexto: 'Kills: '
 --- !u!4 &2120013532 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9175603828048198327, guid: 35160d55f196bdb4c9044cf0b5bffc6e, type: 3}
@@ -22110,6 +22111,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4860659354140147525, guid: 4ef2f01eb2940a04b9c4c9a592b86988, type: 3}
+      propertyPath: m_text
+      value: 'Kills: 0'
+      objectReference: {fileID: 0}
     - target: {fileID: 6172544192049868248, guid: 4ef2f01eb2940a04b9c4c9a592b86988, type: 3}
       propertyPath: m_Pivot.x
       value: 0

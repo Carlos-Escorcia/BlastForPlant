@@ -1,20 +1,22 @@
 using UnityEngine;
-using TMPro; // <-- ¡Super importante para usar TextMeshPro!
+using TMPro;
 
 public class ControlContador : MonoBehaviour
 {
     [Header("Configuración")]
-    public TextMeshProUGUI textoPantalla; // Aquí arrastraremos el texto
+    public TextMeshProUGUI textoPantalla; //Aquí se pone el texto
 
-    private int enemigosMuertos = 0; // Nuestro contador interno
+    [Tooltip("El texto que aparecerá antes del número")]
+    public string prefijoTexto = "Kills: ";
+
+    private int enemigosMuertos = 0; //Contador interno
 
     void Start()
     {
-        // Nos aseguramos de que empiece en 0 al cargar la escena
-        ActualizarTexto();
+        ActualizarTexto(); //Empieza en 0 al cargar la escena
     }
 
-    // Esta función la llamarán los enemigos cuando mueran
+    //La llaman los enemigos al morir
     public void SumarBaja()
     {
         enemigosMuertos++; //Sumamos 1
@@ -23,7 +25,6 @@ public class ControlContador : MonoBehaviour
 
     private void ActualizarTexto()
     {
-        // Cambiamos lo que pone en pantalla
-        textoPantalla.text = "Bajas: " + enemigosMuertos;
+        textoPantalla.text = prefijoTexto + enemigosMuertos; //Aquí se cambia el texto en Unity, en el Inspector
     }
 }

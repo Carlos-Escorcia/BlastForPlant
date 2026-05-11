@@ -102,10 +102,6 @@ public class ControlPausa : MonoBehaviour
         string nombreEscenaActual = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(nombreEscenaActual);
     }
-
-    // ==========================================
-    // --- FUNCIÓN DEL BOTÓN IR AL MENÚ PRINCIPAL
-    // ==========================================
     public void BotonIrAlMenu(string nombreEscenaPrincipal)
     {
         StartCoroutine(CargarMenuConRetraso(nombreEscenaPrincipal));
