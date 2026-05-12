@@ -3,8 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-// Le obligamos a Unity a ponernos un altavoz permanente para la Interfaz
-[RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(AudioSource))]//Obliga a tener un altavoz, la interfaz
 public class ControlPausa : MonoBehaviour
 {
     [Header("Lo que aparece al pausar")]
@@ -26,15 +25,12 @@ public class ControlPausa : MonoBehaviour
     [Tooltip("Arrastra el MP3 para cuando se CIERRA la pausa")]
     public AudioClip sonidoCerrar;
 
-    // ==========================================
-    // --- NUEVO: CONFIGURACIÓN REINICIAR ---
-    // ==========================================
     [Header("Configuración Reiniciar")]
     public AudioClip sonidoReiniciar;
     public float tiempoEsperaReiniciar = 0.5f;
 
     private bool estaPausado = false;
-    private AudioSource fuenteAudioUI; // Nuestro altavoz dedicado
+    private AudioSource fuenteAudioUI; //Altavoz
 
     void Start()
     {
@@ -42,11 +38,11 @@ public class ControlPausa : MonoBehaviour
         if (todoElMenuPausa != null) todoElMenuPausa.SetActive(false);
         if (imagenMochila != null) imagenMochila.sprite = mochilaCerrada;
 
-        // Configuramos el altavoz al empezar
+        //Configuramos el altavoz al empezar
         fuenteAudioUI = GetComponent<AudioSource>();
         fuenteAudioUI.spatialBlend = 0f; // Sonido puro 2D
 
-        // ¡LA MAGIA!: Le decimos que siga sonando aunque Time.timeScale sea 0
+        //Altavoz sigue sonando
         fuenteAudioUI.ignoreListenerPause = true;
     }
 
@@ -54,7 +50,7 @@ public class ControlPausa : MonoBehaviour
     {
         if (estaPausado == true)
         {
-            // --- CERRAR LA MOCHILA ---
+            //Cerrar Mochila
             estaPausado = false;
             Time.timeScale = 1f;
             todoElMenuPausa.SetActive(false);
@@ -65,7 +61,7 @@ public class ControlPausa : MonoBehaviour
         }
         else
         {
-            // --- ABRIR LA MOCHILA ---
+            //Abrir mochila
             estaPausado = true;
             Time.timeScale = 0f; // ¡Congelamos el juego!
             todoElMenuPausa.SetActive(true);
@@ -75,10 +71,6 @@ public class ControlPausa : MonoBehaviour
             if (sonidoAbrir != null) fuenteAudioUI.PlayOneShot(sonidoAbrir);
         }
     }
-
-    // ==========================================
-    // --- FUNCIÓN DEL BOTÓN REINICIAR ---
-    // ==========================================
     public void BotonReiniciarConEfecto()
     {
         StartCoroutine(RutinaReiniciar());
@@ -109,7 +101,7 @@ public class ControlPausa : MonoBehaviour
 
     private IEnumerator CargarMenuConRetraso(string nombreEscena)
     {
-        Time.timeScale = 1f; // El tiempo vuelve a la normalidad para cargar la escena
+        Time.timeScale = 1f; //El tiempo vuelve a la normalidad para cargar la escena
 
         if (animadorMenu != null) animadorMenu.Play("Pulsado");
 

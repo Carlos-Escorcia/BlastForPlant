@@ -1168,7 +1168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc761c17ad540cf44a00f3b36d485923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BotonCambioEscena
-  nombreEscenaDestino: Controles
+  nombreEscenaDestino: Creditos
   sonidoClic: {fileID: 8300000, guid: fa32379726ba87a4583abcd666accf5f, type: 3}
 --- !u!114 &1530025174
 MonoBehaviour:

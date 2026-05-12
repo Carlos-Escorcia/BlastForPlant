@@ -4,27 +4,31 @@ using TMPro;
 public class ControlContador : MonoBehaviour
 {
     [Header("Configuración")]
-    public TextMeshProUGUI textoPantalla; //Aquí se pone el texto
-
-    [Tooltip("El texto que aparecerá antes del número")]
+    public TextMeshProUGUI textoPantalla;
     public string prefijoTexto = "Kills: ";
 
-    private int enemigosMuertos = 0; //Contador interno
+    public static int enemigosMuertosGlobal = 0; //Esto gyuarda las kills enytre niveles
 
     void Start()
     {
-        ActualizarTexto(); //Empieza en 0 al cargar la escena
+        ActualizarTexto();
+        if (textoPantalla != null)
+        {
+            textoPantalla.transform.localScale = Vector3.one;
+        }
     }
 
-    //La llaman los enemigos al morir
     public void SumarBaja()
     {
-        enemigosMuertos++; //Sumamos 1
-        ActualizarTexto(); //Actualizamos la pantalla
+        enemigosMuertosGlobal++;
+        ActualizarTexto();
     }
 
     private void ActualizarTexto()
     {
-        textoPantalla.text = prefijoTexto + enemigosMuertos; //Aquí se cambia el texto en Unity, en el Inspector
+        if (textoPantalla != null)
+        {
+            textoPantalla.text = prefijoTexto + enemigosMuertosGlobal;
+        }
     }
 }
