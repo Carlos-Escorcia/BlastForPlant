@@ -87,13 +87,24 @@ public class ControlPausa : MonoBehaviour
             fuenteAudioUI.PlayOneShot(sonidoReiniciar);
         }
 
-        // 4. Esperamos el tiempo necesario
+        // 3. Esperamos el tiempo necesario
+        // Nota: Como Time.timeScale es 1, WaitForSeconds funcionará a velocidad normal.
         yield return new WaitForSeconds(tiempoEsperaReiniciar);
 
-        // 5. Recargamos la escena actual
+        // NUEVO PASO CORREGIDO:
+        // Cambiamos FindObjectOfType por FindAnyObjectByType (más rápido y sin advertencias)
+        ControlContador contador = Object.FindAnyObjectByType<ControlContador>();
+
+        if (contador != null)
+        {
+            contador.DeshacerKillsDelNivel();
+        }
+
+        // 4. Recargamos la escena actual
         string nombreEscenaActual = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(nombreEscenaActual);
     }
+
     public void BotonIrAlMenu(string nombreEscenaPrincipal)
     {
         StartCoroutine(CargarMenuConRetraso(nombreEscenaPrincipal));
@@ -103,8 +114,14 @@ public class ControlPausa : MonoBehaviour
     {
         Time.timeScale = 1f; //El tiempo vuelve a la normalidad para cargar la escena
 
-        if (animadorMenu != null) animadorMenu.Play("Pulsado");
+        //Resetea las kills si le das al menú principal
+        ControlContador contador = Object.FindAnyObjectByType<ControlContador>();
+        if (contador != null)
+        {
+            contador.DeshacerKillsDelNivel();
+        }
 
+        if (animadorMenu != null) animadorMenu.Play("Pulsado");
 
         if (sonidoClic != null) //Esto va al Menú Principal
         {
