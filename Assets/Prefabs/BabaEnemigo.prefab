@@ -167,11 +167,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4220930776616795507}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43612bc391d4cbe459dc780919baa796, type: 3}
+  m_Script: {fileID: 11500000, guid: 1f686877e830f9a479c584979a79dcf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControlBaba
-  "da\xF1o": 1
   tiempoDeVida: 3
+  tagJugador: Player
+  tagEnemigo: Enemigo
 --- !u!95 &8534664867764289390
 Animator:
   serializedVersion: 7

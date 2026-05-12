@@ -177,7 +177,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 389138862201261385}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9c2107f1aade4d429a812908780e634, type: 3}
+  m_Script: {fileID: 11500000, guid: 1588f972b0a986e4a941a65581385ee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BalaComportamiento
   velocidad: 15
@@ -194,7 +194,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 42dce38fb4bc68b45b8cf1bdb19a05d3, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
