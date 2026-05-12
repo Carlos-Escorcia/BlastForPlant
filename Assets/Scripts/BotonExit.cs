@@ -4,10 +4,6 @@ using System.Collections;
 
 public class BotonExit : MonoBehaviour
 {
-    [Header("Configuración de Salida")]
-    [Tooltip("Tiempo de espera en segundos antes de cerrar")]
-    public float tiempoEspera = 0.4f;
-
     [Header("Referencias")]
     public Animator miAnimador;
     private Button miBoton;
@@ -39,19 +35,30 @@ public class BotonExit : MonoBehaviour
             miBoton.enabled = false;
         }
 
-        if (miAnimador != null) //Reproduce animación
-        {
-            miAnimador.Play("Pulsado BotonExit");
-        }
+        float tiempoDeAudio = 0f;
+        float tiempoDeAnimacion = 0f;
 
-        if (sonidoSalida != null && fuenteAudio != null) //Reproduce animación de salida
+        if (sonidoSalida != null && fuenteAudio != null) //Reproduce sonido y guarda duración
         {
             fuenteAudio.PlayOneShot(sonidoSalida);
+            tiempoDeAudio = sonidoSalida.length; //Calcula duración sonido
         }
 
-        yield return new WaitForSeconds(tiempoEspera); //Espera el tiempo establecido
+        if (miAnimador != null) //Reproduce la animación
+        {
+            miAnimador.Play("Pulsado BotonExit");
+            yield return null;
 
-        //Debug.Log("Cerrando el ejecutable...");
+            // Obtenemos la información del estado actual
+            AnimatorStateInfo infoEstado = miAnimador.GetCurrentAnimatorStateInfo(0);
+
+            //Cálculo de la duración de la velocidad el animator
+            tiempoDeAnimacion = infoEstado.length / infoEstado.speedMultiplier;
+        }
+        float tiempoEsperaTotal = Mathf.Max(tiempoDeAudio, tiempoDeAnimacion);
+
+        yield return new WaitForSeconds(tiempoEsperaTotal); //Espera el tiempo
+        //Debug.Log("Cerrando el ejecutable automáticamente...");
         Application.Quit();
     }
 }
