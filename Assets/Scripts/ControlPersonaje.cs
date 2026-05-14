@@ -52,7 +52,7 @@ public class ControlPersonaje : MonoBehaviour
 
     private bool estaDisparando = false;
 
-    // Variables internas
+    //Variables internas
     private Rigidbody2D rb;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
@@ -66,7 +66,7 @@ public class ControlPersonaje : MonoBehaviour
     private float siguienteTiempoPaso = 0f;
     private bool pisandoTile;
 
-    // Variable de estado para saber si el jugador ha muerto
+    //Variable de estado para saber si el jugador ha muerto
     private bool estaMuerto = false;
 
     void Awake()
@@ -105,21 +105,21 @@ public class ControlPersonaje : MonoBehaviour
 
     void Update()
     {
-        // Si el personaje está muerto, bloqueamos el resto del código completamente
+        //Si el personaje está muerto, bloqueamos el resto del código completamente
         if (estaMuerto) return;
 
-        // 1. LEEMOS EL MAPA AZUL DIRECTAMENTE
+        //Lee el Mapa Azul (el ImputSystem)
         float inputMando = 0f;
         bool botonSalto = false;
         bool botonDisparo = false;
 
-        // Si hemos conectado las acciones en el Inspector, leemos sus valores
+        //Si hemos conectado las acciones en el Inspector, leemos sus valores
         if (accionMover != null) inputMando = accionMover.action.ReadValue<float>();
         if (accionSaltar != null) botonSalto = accionSaltar.action.WasPressedThisFrame();
         if (accionDisparar != null) botonDisparo = accionDisparar.action.WasPressedThisFrame();
 
 
-        // 2. LÓGICA DE MOVIMIENTO NORMAL
+        //Lógica del movimiento
         if (estaDisparando)
         {
             movimientoHorizontal = 0f;
@@ -139,7 +139,7 @@ public class ControlPersonaje : MonoBehaviour
 
         pisandoTile = Physics2D.OverlapCircle(controladorSuelo.position, radioSuelo, EsTile);
 
-        // Pasos
+        //Pasos para moverse
         if (pisandoTile && Mathf.Abs(movimientoHorizontal) > 0 && !estaDisparando)
         {
             if (Time.time >= siguienteTiempoPaso)
@@ -177,7 +177,7 @@ public class ControlPersonaje : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Si está muerto, bloqueamos el movimiento de físicas
+        //Si está muerto, se bloquea el movimiento de físicas
         if (estaMuerto) return;
 
         rb.linearVelocity = new Vector2(movimientoHorizontal * velocidadMovimiento, rb.linearVelocity.y);
@@ -199,13 +199,13 @@ public class ControlPersonaje : MonoBehaviour
 
     public void RecibirDaño()
     {
-        // Bloqueo estricto: Si ya murió, no ejecuta absolutamente nada más
+        //Si está muerto, no ejecuta nada más.
         if (esInvulnerable || estaMuerto) return;
 
-        // NUEVO - El "Martillazo": Cortamos cualquier sonido de paso o salto inmediatamente.
+        //Se corta cualquier sonido de paso o salto inmediatamente.
         if (fuenteAudio != null) fuenteAudio.Stop();
 
-        // Ahora sí, reproducimos el sonido del daño limpio.
+        //Después de silenciar, se reproduce el sonido del daño limpio.
         if (sonidoDaño != null && fuenteAudio != null) fuenteAudio.PlayOneShot(sonidoDaño);
 
         PerderVida();
@@ -253,18 +253,17 @@ public class ControlPersonaje : MonoBehaviour
 
     private IEnumerator MuerteConRetraso()
     {
-        // 1. Apagamos sistemas internos
         estaMuerto = true;
         esInvulnerable = true;
 
-        // 2. NUEVO: Reseteamos los valores a mano para que el Animator no piense que sigues caminando
+        //Resetea los valores para que el Animator no piense que sigue caminando
         movimientoHorizontal = 0f;
         if (animator != null)
         {
             animator.SetFloat("Velocidad", 0f);
         }
 
-        // 3. Lo ocultamos y detenemos físicas
+        //Oculta a
         spriteRenderer.enabled = false;
         rb.linearVelocity = Vector2.zero;
         rb.simulated = false;
