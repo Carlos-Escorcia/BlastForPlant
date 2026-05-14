@@ -263,16 +263,16 @@ public class ControlPersonaje : MonoBehaviour
             animator.SetFloat("Velocidad", 0f);
         }
 
-        //Oculta a
+        //Oculta al personaje
         spriteRenderer.enabled = false;
         rb.linearVelocity = Vector2.zero;
         rb.simulated = false;
 
-        // 4. Esperamos a que suene el hit de muerte
+        //Se espera a que suene el sonido de daño lo que dure
         float tiempoEspera = (sonidoDaño != null) ? sonidoDaño.length : 1f;
         yield return new WaitForSeconds(tiempoEspera);
 
-        // 5. Cambiamos de escena
+        //Se cambia la escena
         SceneManager.LoadScene(nombreEscenaGame_Over);
     }
 
