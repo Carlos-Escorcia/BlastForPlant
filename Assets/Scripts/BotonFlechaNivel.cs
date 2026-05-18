@@ -12,7 +12,7 @@ public class BotonFlechaNivel : MonoBehaviour
     private void Awake()
     {
         miAudioSource = GetComponent<AudioSource>();
-        // Importante: que no suene solo al empezar la escena
+        //No suena al empezar la escena
         miAudioSource.playOnAwake = false;
     }
 
@@ -27,15 +27,15 @@ public class BotonFlechaNivel : MonoBehaviour
         {
             miAudioSource.clip = sonidoClic;
             miAudioSource.Play();
-            // Esperamos lo que dure el sonido antes de cambiar
+            //Esperala duración del sonido antes de cambiar
             yield return new WaitForSeconds(sonidoClic.length);
         }
         else
         {
-            // Si no hay sonido, una espera mínima de un frame para evitar errores
+            //Si no hay sonido, una espera un frame para evitar errores
             yield return null;
         }
 
-        SceneManager.LoadScene(nombreEscenaDestino);
+        SceneManager.LoadScene(nombreEscenaDestino);//Cambia escena
     }
 }

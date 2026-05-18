@@ -2,8 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// Estas etiquetas obligan a Unity a añadir estos componentes automáticamente 
-// al objeto si no los tiene. Así evitamos errores de "NullReferenceException".
 [RequireComponent(typeof(AudioSource))]
 public class BotonCambioEscena : MonoBehaviour
 {
@@ -14,32 +12,32 @@ public class BotonCambioEscena : MonoBehaviour
     [Header("Configuración de Audio")]
     public AudioClip sonidoClic;
 
-    // Referencia interna al componente AudioSource de nuestro objeto
+    //Referencia al componente AudioSource del objeto
     private AudioSource miAudioSource;
 
-    private void Awake()
+    private void Awake() //Esto se ejecuta antes de que empiece el juego
     {
-        // En el Awake (antes de que empiece el juego), obtenemos la referencia al AudioSource.
+        //Se obtiene la referencia al AudioSource.
         miAudioSource = GetComponent<AudioSource>();
 
-        // Nos aseguramos de que el AudioSource no reproduzca nada al aparecer
+        //El AudioSource no se reproduce al aparecer
         miAudioSource.playOnAwake = false;
     }
     public void PresionarBoton()
     {
-        // En lugar de cambiar la escena directamente, iniciamos la Corrutina
+        //Se inicia la corrutina (en lugar de cambiar de escena)
         StartCoroutine(RutinaCambioEscena());
     }
     private IEnumerator RutinaCambioEscena()
     {
-        // 1. Asignamos el sonido y lo reproducimos
+        //Asigna el sonido y lo reproduce
         if (sonidoClic != null)
         {
             miAudioSource.clip = sonidoClic;
             miAudioSource.Play();
 
-            // 2. Le decimos a Unity que ESPERE el tiempo exacto que dura el sonido
-            // yield return significa "pausa esta función aquí y devuelve el control a Unity hasta que pase esto"
+            //Espera el tiempo EXACTO que dura el sonido
+            //yield return significa "pausa esta función aquí y devuelve el control a Unity hasta que pase esto"
             yield return new WaitForSeconds(sonidoClic.length);
         }
         else
@@ -47,7 +45,7 @@ public class BotonCambioEscena : MonoBehaviour
             yield return null;
         }
 
-        //Cuando acaba el tiempo de espera, cambia la escena
+        //Cuando acaba el tiempo de espera, cambia la escena a la que tenga el nombre de esa escena
         SceneManager.LoadScene(nombreEscenaDestino);
     }
 }

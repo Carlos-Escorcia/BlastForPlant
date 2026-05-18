@@ -49,7 +49,7 @@ public class BotonExit : MonoBehaviour
             miAnimador.Play("Pulsado BotonExit");
             yield return null;
 
-            // Obtenemos la información del estado actual
+            //Obtiene la información del estado actual
             AnimatorStateInfo infoEstado = miAnimador.GetCurrentAnimatorStateInfo(0);
 
             //Cálculo de la duración de la velocidad el animator
