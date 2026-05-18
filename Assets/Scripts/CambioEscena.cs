@@ -4,16 +4,15 @@ using UnityEngine.SceneManagement; //Cambio de escenas
 public class CambioEscena : MonoBehaviour
 {
     [Header("Configuración del Nivel")]
-    [Tooltip("Escribe aquí el nombre EXACTO de la escena a la que quieres ir")]
     public string nombreSiguienteEscena;
 
     //Esta función se activa automáticamente cuando alguien entra en la zona "Trigger"
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //Comprobamos si el objeto que acaba de entrar tiene la etiqueta "Player" (tu personaje)
+        //Se comprueba si el objeto tiene la etiqueta "Player"
         if (collision.CompareTag("Player"))
         {
-            //Si es el jugador, cargamos la escena que hayas escrito en el Inspector
+            //Si es el jugador, cambia de escena a la que esté puesta
             SceneManager.LoadScene(nombreSiguienteEscena);
         }
     }

@@ -5,10 +5,7 @@ public class ControlBaba : MonoBehaviour
     [Header("Configuración Básica")]
     public float tiempoDeVida = 3f;
 
-    [Tooltip("El Tag de tu jugador")]
     public string tagJugador = "Player";
-
-    [Tooltip("El Tag del enemigo para que no se dispare a sí mismo")]
     public string tagEnemigo = "Enemigo";
 
     void Start()
@@ -28,10 +25,10 @@ public class ControlBaba : MonoBehaviour
 
     private void ProcesarImpacto(GameObject objetoTocado)
     {
-        // 1. Si la baba choca contra el enemigo que la escupió, lo ignoramos
+        //Si la baba choca contra el enemigo que la escupió, no pasa nada
         if (objetoTocado.CompareTag(tagEnemigo)) return;
 
-        // 2. Si toca al jugador, restamos vida
+        //Si toca al jugador, resta vida
         if (objetoTocado.CompareTag(tagJugador))
         {
             ControlPersonaje personaje = objetoTocado.GetComponent<ControlPersonaje>();
@@ -41,7 +38,7 @@ public class ControlBaba : MonoBehaviour
             }
             Destroy(gameObject);
         }
-        // 3. Si toca el suelo, una pared, el techo o cualquier cosa sólida... se destruye.
+        //Si toca suelo, pared, techo o cualquier cosa sólida... se destruye
         else
         {
             Destroy(gameObject);
