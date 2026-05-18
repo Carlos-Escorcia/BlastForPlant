@@ -44,13 +44,10 @@ public class BotonCambioEscena : MonoBehaviour
         }
         else
         {
-            // Si por algún error olvidaste poner un sonido en el inspector, 
-            // mostramos un aviso en consola y esperamos un milisegundo para evitar errores.
-            Debug.LogWarning("No has asignado un sonido de clic al botón.");
             yield return null;
         }
 
-        // 3. Una vez que el tiempo de espera ha terminado, cambiamos de escena
+        //Cuando acaba el tiempo de espera, cambia la escena
         SceneManager.LoadScene(nombreEscenaDestino);
     }
 }

@@ -10,30 +10,23 @@ public class AudioFeedback : MonoBehaviour
     {
         if (sonidoClic != null)
         {
-            // 1. Creamos un nuevo objeto vacío en el juego llamado "EfectoUI"
+            //Creación de un objeto vacío en el juego
             GameObject altavozTemporal = new GameObject("EfectoUI_" + sonidoClic.name);
 
-            // [Gema de Conocimiento]: DontDestroyOnLoad es una función mágica.
-            // Le dice a Unity: "Cuando cambies de escena, NO destruyas este objeto".
+            //DontDestroyOnLoad: Al cambiar de escena, NO destruye el objeto.
             DontDestroyOnLoad(altavozTemporal);
 
-            // 2. Le añadimos un componente AudioSource a ese objeto vacío
+            //Se añade un AudioSource al objeto vacío
             AudioSource fuenteAudio = altavozTemporal.AddComponent<AudioSource>();
 
-            // 3. Lo configuramos para que sea 2D (se escuche perfecto) y le asignamos tu MP3
             fuenteAudio.spatialBlend = 0f;
             fuenteAudio.clip = sonidoClic;
 
-            // 4. ¡Le damos al Play!
+            //Se ejecuta el sonido con el play
             fuenteAudio.Play();
 
-            // 5. Programamos su autodestrucción.
-            // Destroy(objeto, tiempo) eliminará el altavoz justo cuando termine de sonar el MP3.
+            //Se elimina cuando termina de sonar.
             Destroy(altavozTemporal, sonidoClic.length);
-        }
-        else
-        {
-            Debug.LogWarning("Falta asignar el AudioClip en el Inspector.");
         }
     }
 }
